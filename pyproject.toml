@@ -2,7 +2,7 @@
 name = "gen_trade"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["Josh Harrison <joshharrison13@gmail.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
