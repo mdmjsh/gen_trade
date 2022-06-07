@@ -11,6 +11,8 @@ ipdb = "^0.13.9"
 ipython = "^8.4.0"
 python-binance = "^1.0.16"
 ta = "^0.10.1"
+pytest = "^7.1.2"
+mock = "^4.0.3"
 
 [tool.poetry.dev-dependencies]
 
