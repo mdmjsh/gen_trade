@@ -1,0 +1,7 @@
+{
+    "name": "RSI",
+    "absolute": true,
+    "op": ">=",
+    "value": 70,
+    "rel_value": null
+}

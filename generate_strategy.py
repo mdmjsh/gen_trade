@@ -5,6 +5,7 @@ import sys
 import argparse
 from string import ascii_lowercase
 
+MIN_INDICATORS = 2
 MAX_SAME_CLASS_INDICATORS = 2
 MAX_STRATEGY_INDICATORS = 4
 POPULATION_SIZE = 10
@@ -29,7 +30,7 @@ def pop_indicator(to_pop, indicators):
 
 def choose_num_indicators(max_indicators):
     # helper function to aid testability of `generate`
-    return random.choice(range(max_indicators))
+    return random.choice(range(MIN_INDICATORS, max_indicators))
 
 
 def generate(base_indicator, indicators, conjunctions, max_indicators=MAX_STRATEGY_INDICATORS, max_same_class=MAX_SAME_CLASS_INDICATORS):
