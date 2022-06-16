@@ -1,11 +1,14 @@
+import pandas as pd
 from typing import Callable, Dict, Sequence
 
-def get_callback(callback_value: str):
-    pass
 
-def make_callback(callback_value: str):
-    callback, args, kwargs = get_callback(callback_value)
-    return callback(*args, **kwargs)
+def get_callback(callback_value: str, indicator):
+    CALLBACKS = dict(PRICE_DIVERGENCE_UP=[lambda x: x[indicator] > x['close'], None, None])
+    return CALLBACKS[callback_value]
+
+def make_callback(df: pd.DataFrame, callback_value: str, indicator:str):
+    callback, args, kwargs = get_callback(callback_value, indicator)
+    return df.loc[df.apply(callback, axis=1)]
 
 
 def load_from_object(strategy: Dict):
@@ -17,9 +20,9 @@ def load_from_object(strategy: Dict):
 
     for indicator in strategy['indicators']:
         if indicator["absolute"]:
-            _parsed = f"{indicator['name']} {indicator['op']} {indicator['abs_value']}"
+            _parsed = f"{indicator['indicator']} {indicator['op']} {indicator['abs_value']}"
         else:
-            _parsed = f"{indicator['name']} {indicator['op']} {make_callback(indicator['rel_value'])}"
+            _parsed = f"{indicator['indicator']} {indicator['op']} {make_callback(indicator['rel_value'])}"
         parsed.append(_parsed)
 
     if conjunctions:
@@ -32,3 +35,8 @@ def load_from_object(strategy: Dict):
                 continue
         return result
     return parsed[0]
+
+
+def query_strategy(df: pd.DataFrame, strategy: Dict):
+    query = load_from_object(strategy)
+    return df.query(query)
