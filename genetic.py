@@ -29,8 +29,6 @@ def main():
 
         logger.info(f"Strategy got results {res}")
         results.append(res)
-    import ipdb
-    ipdb.set_trace()
     return res
 
 
@@ -55,6 +53,7 @@ def find_profit_in_window(df: pd.DataFrame, subset: pd.DataFrame, strategy: dict
             df['converted_open_ts'] <= end)
         window = df.loc[mask]
 
+        strat_id = str(uuid.uuid4())
         if not window.empty:
             high = window['close'].max()
             low = window['close'].min()
@@ -70,10 +69,10 @@ def find_profit_in_window(df: pd.DataFrame, subset: pd.DataFrame, strategy: dict
             profit_steps = high_delta.components.hours * 15 + high_delta.components.minutes
 
             low_timestamp = pd.Timestamp(low_point['converted_open_ts'].values[0])
-            low_delta = (high_timestamp - row['converted_open_ts'])
+            low_delta = (low_timestamp - row['converted_open_ts'])
             loss_steps = low_delta.components.hours * 15 + low_delta.components.minutes
 
-            res = dict(id=str(uuid.uuid4()), strategy=strategy,
+            res = dict(id=strat_id, strategy=strategy,
                                 profit=dict(
                                     max=max_profit, timestamp=high_timestamp, n_steps=profit_steps),
                                 loss=dict(
@@ -83,6 +82,7 @@ def find_profit_in_window(df: pd.DataFrame, subset: pd.DataFrame, strategy: dict
             logger = logging.getLogger()
             logger.info(f"Strategy got results {res}")
             results.append(res)
+            import ipdb;ipdb.set_trace()
     return results
 
 
@@ -90,4 +90,4 @@ if __name__ == "__main__":
     logging.basicConfig(format='%(asctime)s%(levelname)s:%(message)s',
                         stream=sys.stderr, level=logging.INFO)
 
-    main()
+    results = main()
