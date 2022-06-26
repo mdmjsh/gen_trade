@@ -1,0 +1,2154 @@
+[
+    {
+        "indicator": "volume",
+        "type": "volume",
+        "name": "volume_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume",
+        "type": "volume",
+        "name": "volume_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume",
+        "type": "volume",
+        "name": "volume_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume",
+        "type": "volume",
+        "name": "volume_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_adi",
+        "type": "volume",
+        "name": "volume_adi_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_adi",
+        "type": "volume",
+        "name": "volume_adi_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_adi",
+        "type": "volume",
+        "name": "volume_adi_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_adi",
+        "type": "volume",
+        "name": "volume_adi_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_obv",
+        "type": "volume",
+        "name": "volume_obv_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_obv",
+        "type": "volume",
+        "name": "volume_obv_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_obv",
+        "type": "volume",
+        "name": "volume_obv_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_obv",
+        "type": "volume",
+        "name": "volume_obv_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_cmf",
+        "type": "volume",
+        "name": "volume_cmf_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_cmf",
+        "type": "volume",
+        "name": "volume_cmf_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_cmf",
+        "type": "volume",
+        "name": "volume_cmf_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_cmf",
+        "type": "volume",
+        "name": "volume_cmf_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_fi",
+        "type": "volume",
+        "name": "volume_fi_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_fi",
+        "type": "volume",
+        "name": "volume_fi_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_fi",
+        "type": "volume",
+        "name": "volume_fi_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_fi",
+        "type": "volume",
+        "name": "volume_fi_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_em",
+        "type": "volume",
+        "name": "volume_em_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_em",
+        "type": "volume",
+        "name": "volume_em_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_em",
+        "type": "volume",
+        "name": "volume_em_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_em",
+        "type": "volume",
+        "name": "volume_em_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_sma_em",
+        "type": "volume",
+        "name": "volume_sma_em_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_sma_em",
+        "type": "volume",
+        "name": "volume_sma_em_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_sma_em",
+        "type": "volume",
+        "name": "volume_sma_em_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_sma_em",
+        "type": "volume",
+        "name": "volume_sma_em_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_vpt",
+        "type": "volume",
+        "name": "volume_vpt_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_vpt",
+        "type": "volume",
+        "name": "volume_vpt_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_vpt",
+        "type": "volume",
+        "name": "volume_vpt_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_vpt",
+        "type": "volume",
+        "name": "volume_vpt_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_vwap",
+        "type": "volume",
+        "name": "volume_vwap_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_vwap",
+        "type": "volume",
+        "name": "volume_vwap_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_vwap",
+        "type": "volume",
+        "name": "volume_vwap_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_vwap",
+        "type": "volume",
+        "name": "volume_vwap_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_mfi",
+        "type": "volume",
+        "name": "volume_mfi_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_mfi",
+        "type": "volume",
+        "name": "volume_mfi_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_mfi",
+        "type": "volume",
+        "name": "volume_mfi_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_mfi",
+        "type": "volume",
+        "name": "volume_mfi_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_nvi",
+        "type": "volume",
+        "name": "volume_nvi_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_nvi",
+        "type": "volume",
+        "name": "volume_nvi_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volume_nvi",
+        "type": "volume",
+        "name": "volume_nvi_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volume_nvi",
+        "type": "volume",
+        "name": "volume_nvi_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_bbm",
+        "type": "volatility",
+        "name": "volatility_bbm_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_bbm",
+        "type": "volatility",
+        "name": "volatility_bbm_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_bbm",
+        "type": "volatility",
+        "name": "volatility_bbm_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_bbm",
+        "type": "volatility",
+        "name": "volatility_bbm_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_bbh",
+        "type": "volatility",
+        "name": "volatility_bbh_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_bbh",
+        "type": "volatility",
+        "name": "volatility_bbh_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_bbh",
+        "type": "volatility",
+        "name": "volatility_bbh_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_bbh",
+        "type": "volatility",
+        "name": "volatility_bbh_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_bbl",
+        "type": "volatility",
+        "name": "volatility_bbl_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_bbl",
+        "type": "volatility",
+        "name": "volatility_bbl_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_bbl",
+        "type": "volatility",
+        "name": "volatility_bbl_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_bbl",
+        "type": "volatility",
+        "name": "volatility_bbl_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_bbw",
+        "type": "volatility",
+        "name": "volatility_bbw_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_bbw",
+        "type": "volatility",
+        "name": "volatility_bbw_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_bbw",
+        "type": "volatility",
+        "name": "volatility_bbw_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_bbw",
+        "type": "volatility",
+        "name": "volatility_bbw_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_bbp",
+        "type": "volatility",
+        "name": "volatility_bbp_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_bbp",
+        "type": "volatility",
+        "name": "volatility_bbp_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_bbp",
+        "type": "volatility",
+        "name": "volatility_bbp_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_bbp",
+        "type": "volatility",
+        "name": "volatility_bbp_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_bbhi",
+        "type": "volatility",
+        "name": "volatility_bbhi_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_bbhi",
+        "type": "volatility",
+        "name": "volatility_bbhi_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_bbhi",
+        "type": "volatility",
+        "name": "volatility_bbhi_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_bbhi",
+        "type": "volatility",
+        "name": "volatility_bbhi_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_bbli",
+        "type": "volatility",
+        "name": "volatility_bbli_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_bbli",
+        "type": "volatility",
+        "name": "volatility_bbli_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_bbli",
+        "type": "volatility",
+        "name": "volatility_bbli_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_bbli",
+        "type": "volatility",
+        "name": "volatility_bbli_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_kcc",
+        "type": "volatility",
+        "name": "volatility_kcc_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_kcc",
+        "type": "volatility",
+        "name": "volatility_kcc_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_kcc",
+        "type": "volatility",
+        "name": "volatility_kcc_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_kcc",
+        "type": "volatility",
+        "name": "volatility_kcc_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_kch",
+        "type": "volatility",
+        "name": "volatility_kch_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_kch",
+        "type": "volatility",
+        "name": "volatility_kch_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_kch",
+        "type": "volatility",
+        "name": "volatility_kch_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_kch",
+        "type": "volatility",
+        "name": "volatility_kch_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_kcl",
+        "type": "volatility",
+        "name": "volatility_kcl_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_kcl",
+        "type": "volatility",
+        "name": "volatility_kcl_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_kcl",
+        "type": "volatility",
+        "name": "volatility_kcl_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_kcl",
+        "type": "volatility",
+        "name": "volatility_kcl_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_kcw",
+        "type": "volatility",
+        "name": "volatility_kcw_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_kcw",
+        "type": "volatility",
+        "name": "volatility_kcw_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_kcw",
+        "type": "volatility",
+        "name": "volatility_kcw_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_kcw",
+        "type": "volatility",
+        "name": "volatility_kcw_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_kcp",
+        "type": "volatility",
+        "name": "volatility_kcp_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_kcp",
+        "type": "volatility",
+        "name": "volatility_kcp_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_kcp",
+        "type": "volatility",
+        "name": "volatility_kcp_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_kcp",
+        "type": "volatility",
+        "name": "volatility_kcp_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_kchi",
+        "type": "volatility",
+        "name": "volatility_kchi_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_kchi",
+        "type": "volatility",
+        "name": "volatility_kchi_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_kchi",
+        "type": "volatility",
+        "name": "volatility_kchi_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_kchi",
+        "type": "volatility",
+        "name": "volatility_kchi_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_kcli",
+        "type": "volatility",
+        "name": "volatility_kcli_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_kcli",
+        "type": "volatility",
+        "name": "volatility_kcli_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_kcli",
+        "type": "volatility",
+        "name": "volatility_kcli_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_kcli",
+        "type": "volatility",
+        "name": "volatility_kcli_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_dcl",
+        "type": "volatility",
+        "name": "volatility_dcl_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_dcl",
+        "type": "volatility",
+        "name": "volatility_dcl_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_dcl",
+        "type": "volatility",
+        "name": "volatility_dcl_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_dcl",
+        "type": "volatility",
+        "name": "volatility_dcl_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_dch",
+        "type": "volatility",
+        "name": "volatility_dch_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_dch",
+        "type": "volatility",
+        "name": "volatility_dch_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_dch",
+        "type": "volatility",
+        "name": "volatility_dch_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_dch",
+        "type": "volatility",
+        "name": "volatility_dch_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_dcm",
+        "type": "volatility",
+        "name": "volatility_dcm_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_dcm",
+        "type": "volatility",
+        "name": "volatility_dcm_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_dcm",
+        "type": "volatility",
+        "name": "volatility_dcm_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_dcm",
+        "type": "volatility",
+        "name": "volatility_dcm_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_dcw",
+        "type": "volatility",
+        "name": "volatility_dcw_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_dcw",
+        "type": "volatility",
+        "name": "volatility_dcw_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_dcw",
+        "type": "volatility",
+        "name": "volatility_dcw_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_dcw",
+        "type": "volatility",
+        "name": "volatility_dcw_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_dcp",
+        "type": "volatility",
+        "name": "volatility_dcp_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_dcp",
+        "type": "volatility",
+        "name": "volatility_dcp_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_dcp",
+        "type": "volatility",
+        "name": "volatility_dcp_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_dcp",
+        "type": "volatility",
+        "name": "volatility_dcp_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_atr",
+        "type": "volatility",
+        "name": "volatility_atr_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_atr",
+        "type": "volatility",
+        "name": "volatility_atr_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_atr",
+        "type": "volatility",
+        "name": "volatility_atr_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_atr",
+        "type": "volatility",
+        "name": "volatility_atr_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_ui",
+        "type": "volatility",
+        "name": "volatility_ui_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_ui",
+        "type": "volatility",
+        "name": "volatility_ui_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "volatility_ui",
+        "type": "volatility",
+        "name": "volatility_ui_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "volatility_ui",
+        "type": "volatility",
+        "name": "volatility_ui_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_macd",
+        "type": "trend",
+        "name": "trend_macd_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_macd",
+        "type": "trend",
+        "name": "trend_macd_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_macd",
+        "type": "trend",
+        "name": "trend_macd_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_macd",
+        "type": "trend",
+        "name": "trend_macd_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_macd_signal",
+        "type": "trend",
+        "name": "trend_macd_signal_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_macd_signal",
+        "type": "trend",
+        "name": "trend_macd_signal_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_macd_signal",
+        "type": "trend",
+        "name": "trend_macd_signal_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_macd_signal",
+        "type": "trend",
+        "name": "trend_macd_signal_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_macd_diff",
+        "type": "trend",
+        "name": "trend_macd_diff_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_macd_diff",
+        "type": "trend",
+        "name": "trend_macd_diff_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_macd_diff",
+        "type": "trend",
+        "name": "trend_macd_diff_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_macd_diff",
+        "type": "trend",
+        "name": "trend_macd_diff_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_sma_fast",
+        "type": "trend",
+        "name": "trend_sma_fast_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_sma_fast",
+        "type": "trend",
+        "name": "trend_sma_fast_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_sma_fast",
+        "type": "trend",
+        "name": "trend_sma_fast_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_sma_fast",
+        "type": "trend",
+        "name": "trend_sma_fast_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_sma_slow",
+        "type": "trend",
+        "name": "trend_sma_slow_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_sma_slow",
+        "type": "trend",
+        "name": "trend_sma_slow_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_sma_slow",
+        "type": "trend",
+        "name": "trend_sma_slow_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_sma_slow",
+        "type": "trend",
+        "name": "trend_sma_slow_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_ema_fast",
+        "type": "trend",
+        "name": "trend_ema_fast_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_ema_fast",
+        "type": "trend",
+        "name": "trend_ema_fast_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_ema_fast",
+        "type": "trend",
+        "name": "trend_ema_fast_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_ema_fast",
+        "type": "trend",
+        "name": "trend_ema_fast_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_ema_slow",
+        "type": "trend",
+        "name": "trend_ema_slow_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_ema_slow",
+        "type": "trend",
+        "name": "trend_ema_slow_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_ema_slow",
+        "type": "trend",
+        "name": "trend_ema_slow_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_ema_slow",
+        "type": "trend",
+        "name": "trend_ema_slow_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_vortex_ind_pos",
+        "type": "trend",
+        "name": "trend_vortex_ind_pos_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_vortex_ind_pos",
+        "type": "trend",
+        "name": "trend_vortex_ind_pos_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_vortex_ind_pos",
+        "type": "trend",
+        "name": "trend_vortex_ind_pos_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_vortex_ind_pos",
+        "type": "trend",
+        "name": "trend_vortex_ind_pos_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_vortex_ind_neg",
+        "type": "trend",
+        "name": "trend_vortex_ind_neg_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_vortex_ind_neg",
+        "type": "trend",
+        "name": "trend_vortex_ind_neg_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_vortex_ind_neg",
+        "type": "trend",
+        "name": "trend_vortex_ind_neg_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_vortex_ind_neg",
+        "type": "trend",
+        "name": "trend_vortex_ind_neg_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_vortex_ind_diff",
+        "type": "trend",
+        "name": "trend_vortex_ind_diff_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_vortex_ind_diff",
+        "type": "trend",
+        "name": "trend_vortex_ind_diff_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_vortex_ind_diff",
+        "type": "trend",
+        "name": "trend_vortex_ind_diff_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_vortex_ind_diff",
+        "type": "trend",
+        "name": "trend_vortex_ind_diff_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_kst",
+        "type": "trend",
+        "name": "trend_kst_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_kst",
+        "type": "trend",
+        "name": "trend_kst_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_kst",
+        "type": "trend",
+        "name": "trend_kst_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_kst",
+        "type": "trend",
+        "name": "trend_kst_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_kst_sig",
+        "type": "trend",
+        "name": "trend_kst_sig_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_kst_sig",
+        "type": "trend",
+        "name": "trend_kst_sig_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_kst_sig",
+        "type": "trend",
+        "name": "trend_kst_sig_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_kst_sig",
+        "type": "trend",
+        "name": "trend_kst_sig_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_kst_diff",
+        "type": "trend",
+        "name": "trend_kst_diff_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_kst_diff",
+        "type": "trend",
+        "name": "trend_kst_diff_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_kst_diff",
+        "type": "trend",
+        "name": "trend_kst_diff_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_kst_diff",
+        "type": "trend",
+        "name": "trend_kst_diff_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_ichimoku_conv",
+        "type": "trend",
+        "name": "trend_ichimoku_conv_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_ichimoku_conv",
+        "type": "trend",
+        "name": "trend_ichimoku_conv_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_ichimoku_conv",
+        "type": "trend",
+        "name": "trend_ichimoku_conv_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_ichimoku_conv",
+        "type": "trend",
+        "name": "trend_ichimoku_conv_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_ichimoku_base",
+        "type": "trend",
+        "name": "trend_ichimoku_base_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_ichimoku_base",
+        "type": "trend",
+        "name": "trend_ichimoku_base_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_ichimoku_base",
+        "type": "trend",
+        "name": "trend_ichimoku_base_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_ichimoku_base",
+        "type": "trend",
+        "name": "trend_ichimoku_base_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_ichimoku_a",
+        "type": "trend",
+        "name": "trend_ichimoku_a_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_ichimoku_a",
+        "type": "trend",
+        "name": "trend_ichimoku_a_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_ichimoku_a",
+        "type": "trend",
+        "name": "trend_ichimoku_a_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_ichimoku_a",
+        "type": "trend",
+        "name": "trend_ichimoku_a_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_ichimoku_b",
+        "type": "trend",
+        "name": "trend_ichimoku_b_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_ichimoku_b",
+        "type": "trend",
+        "name": "trend_ichimoku_b_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_ichimoku_b",
+        "type": "trend",
+        "name": "trend_ichimoku_b_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_ichimoku_b",
+        "type": "trend",
+        "name": "trend_ichimoku_b_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_adx",
+        "type": "trend",
+        "name": "trend_adx_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_adx",
+        "type": "trend",
+        "name": "trend_adx_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_adx_pos",
+        "type": "trend",
+        "name": "trend_adx_pos_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_adx_pos",
+        "type": "trend",
+        "name": "trend_adx_pos_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_adx_pos",
+        "type": "trend",
+        "name": "trend_adx_pos_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "ADX_NEG"
+    },
+    {
+        "indicator": "trend_adx_pos",
+        "type": "trend",
+        "name": "trend_adx_pos_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "ADX_NEG"
+    },
+    {
+        "indicator": "trend_adx_neg",
+        "type": "trend",
+        "name": "trend_adx_neg_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_adx_neg",
+        "type": "trend",
+        "name": "trend_adx_neg_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "ADX_NEG"
+    },
+    {
+        "indicator": "trend_adx_neg",
+        "type": "trend",
+        "name": "trend_adx_neg_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "ADX_NEG"
+    },
+    {
+        "indicator": "trend_adx_neg",
+        "type": "trend",
+        "name": "trend_adx_neg_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_aroon_up",
+        "type": "trend",
+        "name": "trend_aroon_up_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_aroon_up",
+        "type": "trend",
+        "name": "trend_aroon_up_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_aroon_up",
+        "type": "trend",
+        "name": "trend_aroon_up_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "AROON_DOWN"
+    },
+    {
+        "indicator": "trend_aroon_up",
+        "type": "trend",
+        "name": "trend_aroon_up_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "AROON_DOWN"
+    },
+    {
+        "indicator": "trend_aroon_down",
+        "type": "trend",
+        "name": "trend_aroon_down_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_aroon_down",
+        "type": "trend",
+        "name": "trend_aroon_down_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "AROON_UP"
+    },
+    {
+        "indicator": "trend_aroon_down",
+        "type": "trend",
+        "name": "trend_aroon_down_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "AROON_UP"
+    },
+    {
+        "indicator": "trend_aroon_ind",
+        "type": "trend",
+        "name": "trend_aroon_ind_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_psar_up",
+        "type": "trend",
+        "name": "trend_psar_up_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_psar_up",
+        "type": "trend",
+        "name": "trend_psar_up_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_psar_up",
+        "type": "trend",
+        "name": "trend_psar_up_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_psar_up",
+        "type": "trend",
+        "name": "trend_psar_up_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_psar_down",
+        "type": "trend",
+        "name": "trend_psar_down_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_psar_down",
+        "type": "trend",
+        "name": "trend_psar_down_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "trend_psar_down",
+        "type": "trend",
+        "name": "trend_psar_down_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "momentum_stoch_rsi_k",
+        "type": "momentum",
+        "name": "momentum_stoch_rsi_k_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "momentum_stoch_rsi_k",
+        "type": "momentum",
+        "name": "momentum_stoch_rsi_k_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "momentum_stoch_rsi_k",
+        "type": "momentum",
+        "name": "momentum_stoch_rsi_k_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "STOCH_RSI_D"
+    },
+    {
+        "indicator": "momentum_stoch_rsi_k",
+        "type": "momentum",
+        "name": "momentum_stoch_rsi_k_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "STOCH_RSI_D"
+    },
+    {
+        "indicator": "momentum_stoch_rsi_d",
+        "type": "momentum",
+        "name": "momentum_stoch_rsi_d_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "momentum_stoch_rsi_d",
+        "type": "momentum",
+        "name": "momentum_stoch_rsi_d_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "momentum_stoch_rsi_d",
+        "type": "momentum",
+        "name": "momentum_stoch_rsi_d_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "STOCH_RSI_K"
+    },
+    {
+        "indicator": "momentum_stoch_rsi_d",
+        "type": "momentum",
+        "name": "momentum_stoch_rsi_d_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "STOCH_RSI_K"
+    },
+
+    {
+        "indicator": "momentum_tsi",
+        "type": "momentum",
+        "name": "momentum_tsi_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "momentum_tsi",
+        "type": "momentum",
+        "name": "momentum_tsi_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "momentum_ppo",
+        "type": "momentum",
+        "name": "momentum_ppo_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PPO_SIGNAL"
+    },
+    {
+        "indicator": "momentum_ppo",
+        "type": "momentum",
+        "name": "momentum_ppo_lt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PPO_SIGNAL"
+    },
+    {
+        "indicator": "momentum_pvo",
+        "type": "momentum",
+        "name": "momentum_pvo_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "momentum_pvo",
+        "type": "momentum",
+        "name": "momentum_pvo_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "momentum_kama",
+        "type": "momentum",
+        "name": "momentum_kama_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "momentum_kama",
+        "type": "momentum",
+        "name": "momentum_kama_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "PREVIOUS_PERIOD"
+    },
+    {
+        "indicator": "momentum_kama",
+        "type": "momentum",
+        "name": "momentum_kama_gt",
+        "absolute": false,
+        "op": ">",
+        "abs_value": null,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "momentum_kama",
+        "type": "momentum",
+        "name": "momentum_kama_gt",
+        "absolute": false,
+        "op": "<",
+        "abs_value": null,
+        "rel_value": "MA"
+    }
+]

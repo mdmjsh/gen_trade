@@ -2,40 +2,46 @@ import pandas as pd
 import json
 
 """
-Write blank signals to signals.json so that the values can be manually completed.
+Write blank signals relative to signals.json - absolute signals have to be created by hand.
 
 """
-df = pd.read_csv('BTCUSDC_indicators.csv')
+DF = pd.read_csv('BTCUSDC_indicators.csv')
 
-cats = ['momentum', 'trend', 'volatility_bbh', 'volume']
+CATS = ['momentum', 'trend', 'volatility', 'volume']
 
-indicators = (x for x in df.columns if any([x.startswith(y) for y in cats]))
+INDICATORS = (x for x in DF.columns if any([x.startswith(y) for y in CATS]))
+RELATIVES = ["PREVIOUS_PERIOD", "MA"]
 
-with open('signals.json', 'r') as fi:
-    signals = json.load(fi)
+def gte_signal(ind, _type, rel_value):
+    return gen_signal(ind, _type, rel_value, ">=")
 
-for ind in indicators:
-    _type = ind.split("_")[0]
-    signals.extend([
-        {
+def lte_signal(ind, _type, rel_value):
+    return gen_signal(ind, _type, rel_value, "<=")
+
+def gen_signal(ind, _type, rel_value, op):
+    return {
             "indicator": ind,
             "type": _type,
             "name": f"{ind}_gt",
-            "absolute": None,
-            "op": ">=",
-            "abs_value": 0,
-            "rel_value": None
-        },
-        {
-            "indicator": ind,
-            "type": _type,
-            "name": f"{ind}_lt",
-            "absolute": None,
-            "op": "<=",
-            "abs_value": 0,
-            "rel_value": None
+            "absolute": False,
+            "op": op,
+            "abs_value": None,
+            "rel_value": rel_value
         }
-    ])
 
-with open('signals.json', 'w+') as fi:
-    json.dump(signals, fi)
+def main():
+    signals = []
+
+    for ind in INDICATORS:
+        _type = ind.split("_")[0]
+        for rel in RELATIVES:
+            signals.extend([gte_signal(ind, _type, rel), lte_signal(ind, _type, rel)])
+    return signals
+
+
+
+if __name__ == "__main__":
+    signals = main()
+
+    with open('signals.json', 'w+') as fi:
+        json.dump(signals, fi)

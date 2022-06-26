@@ -13,6 +13,7 @@ def make_callback(df: pd.DataFrame, callback_value: str, indicator:str):
 
 def load_from_object(strategy: Dict):
     parsed = []
+    print(f"STRATEGY: {strategy}")
     conjunctions = strategy['conjunctions']
 
     if len(conjunctions) != len(strategy['indicators']) -1:
@@ -22,6 +23,7 @@ def load_from_object(strategy: Dict):
         if indicator["absolute"]:
             _parsed = f"{indicator['indicator']} {indicator['op']} {indicator['abs_value']}"
         else:
+            # NB Need to pass DF in here somehow...
             _parsed = f"{indicator['indicator']} {indicator['op']} {make_callback(indicator['rel_value'])}"
         parsed.append(_parsed)
 

@@ -1,0 +1,353 @@
+[
+    {
+        "indicator": "volume_cmf",
+        "type": "volume",
+        "name": "chaikin-money-flow",
+        "absolute": true,
+        "op": ">=",
+        "abs_value": 0.7,
+        "rel_value": null
+    },
+    {
+        "indicator": "volume_cmf",
+        "type": "volume",
+        "name": "chaikin-money-flow",
+        "absolute": true,
+        "op": "<=",
+        "abs_value": 0,
+        "rel_value": null
+    },
+    {
+        "indicator": "volume_sma_em",
+        "type": "volume",
+        "name": "volume_sma_em_lt",
+        "absolute": true,
+        "op": "<=",
+        "abs_value": null,
+        "rel_value": null
+    },
+    {
+        "indicator": "volume_mfi",
+        "type": "volume",
+        "name": "Money Flow Index",
+        "absolute": true,
+        "op": ">=",
+        "abs_value": 80,
+        "rel_value": null
+    },
+    {
+        "indicator": "volume_mfi",
+        "type": "volume",
+        "name": "Money Flow Index",
+        "absolute": true,
+        "op": "<=",
+        "abs_value": 20,
+        "rel_value": null
+    },
+    {
+        "indicator": "volume_mfi",
+        "type": "volume",
+        "name": "Money Flow Index",
+        "absolute": true,
+        "op": ">=",
+        "abs_value": 90,
+        "rel_value": null
+    },
+    {
+        "indicator": "volume_mfi",
+        "type": "volume",
+        "name": "Money Flow Index",
+        "absolute": true,
+        "op": "<=",
+        "abs_value": 10,
+        "rel_value": null
+    },
+    {
+        "indicator": "trend_trix",
+        "type": "trend",
+        "name": "trend_trix_gt",
+        "absolute": true,
+        "op": "<",
+        "abs_value": 0,
+        "rel_value": null
+    },
+    {
+        "indicator": "trend_trix",
+        "type": "trend",
+        "name": "trend_trix_gt",
+        "absolute": true,
+        "op": ">",
+        "abs_value": 0,
+        "rel_value": null
+    },
+    {
+        "indicator": "trend_mass_index",
+        "type": "trend",
+        "name": "trend_mass_index_gt",
+        "absolute": true,
+        "op": "<=",
+        "abs_value": 27,
+        "rel_value": null
+    },
+    {
+        "indicator": "trend_stc",
+        "type": "trend",
+        "name": "trend_stc_gt",
+        "absolute": true,
+        "op": ">=",
+        "abs_value": 75,
+        "rel_value": null
+    },
+    {
+        "indicator": "trend_stc",
+        "type": "trend",
+        "name": "trend_stc_gt",
+        "absolute": true,
+        "op": "<=",
+        "abs_value": 25,
+        "rel_value": null
+    },
+    {
+        "indicator": "trend_adx",
+        "type": "trend",
+        "name": "trend_adx_gt",
+        "absolute": true,
+        "op": ">",
+        "abs_value": 20,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_adx",
+        "type": "trend",
+        "name": "trend_adx_gt",
+        "absolute": true,
+        "op": "<",
+        "abs_value": 20,
+        "rel_value": "MA"
+    },
+    {
+        "indicator": "trend_cci",
+        "type": "trend",
+        "name": "trend_cci_gt",
+        "absolute": true,
+        "op": ">",
+        "abs_value": 100,
+        "rel_value": null
+    },
+    {
+        "indicator": "trend_cci",
+        "type": "trend",
+        "name": "trend_cci_gt",
+        "absolute": true,
+        "op": "<",
+        "abs_value": -100,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_rsi",
+        "type": "momentum",
+        "name": "momentum_rsi_gt",
+        "absolute": true,
+        "op": ">=",
+        "abs_value": 70,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_rsi",
+        "type": "momentum",
+        "name": "momentum_rsi_gt",
+        "absolute": true,
+        "op": "<=",
+        "abs_value": 30,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_rsi",
+        "type": "momentum",
+        "name": "momentum_rsi_gt",
+        "absolute": true,
+        "op": ">=",
+        "abs_value": 80,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_rsi",
+        "type": "momentum",
+        "name": "momentum_rsi_lt",
+        "absolute": true,
+        "op": "<=",
+        "abs_value": 20,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_stoch_rsi",
+        "type": "momentum",
+        "name": "momentum_stoch_rsi_gt",
+        "absolute": true,
+        "op": ">=",
+        "abs_value": 80,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_stoch_rsi",
+        "type": "momentum",
+        "name": "momentum_stoch_rsi_lt",
+        "absolute": true,
+        "op": "<=",
+        "abs_value": 20,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_tsi",
+        "type": "momentum",
+        "name": "momentum_tsi_gt",
+        "absolute": true,
+        "op": ">=",
+        "abs_value": 30,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_tsi",
+        "type": "momentum",
+        "name": "momentum_tsi_gt",
+        "absolute": true,
+        "op": ">=",
+        "abs_value": 20,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_tsi",
+        "type": "momentum",
+        "name": "momentum_tsi_lt",
+        "absolute": true,
+        "op": "<=",
+        "abs_value": -30,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_tsi",
+        "type": "momentum",
+        "name": "momentum_tsi_lt",
+        "absolute": true,
+        "op": "<=",
+        "abs_value": -20,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_uo",
+        "type": "momentum",
+        "name": "momentum_uo_gt",
+        "absolute": true,
+        "op": ">=",
+        "abs_value": 70,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_uo",
+        "type": "momentum",
+        "name": "momentum_uo_gt",
+        "absolute": true,
+        "op": "<=",
+        "abs_value": 30,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_stoch",
+        "type": "momentum",
+        "name": "momentum_stoch_gt",
+        "absolute": true,
+        "op": ">=",
+        "abs_value": 80,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_stoch",
+        "type": "momentum",
+        "name": "momentum_stoch_lt",
+        "absolute": true,
+        "op": "<=",
+        "abs_value": 20,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_wr",
+        "type": "momentum",
+        "name": "momentum_wr_gt",
+        "absolute": true,
+        "op": ">",
+        "abs_value": -20,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_wr",
+        "type": "momentum",
+        "name": "momentum_wr_lt",
+        "absolute": true,
+        "op": "<=",
+        "abs_value": -80,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_ao",
+        "type": "momentum",
+        "name": "momentum_ao_lt",
+        "absolute": true,
+        "op": "<",
+        "abs_value": 0,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_roc",
+        "type": "momentum",
+        "name": "momentum_roc_gt",
+        "absolute": true,
+        "op": ">",
+        "abs_value": 0,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_roc",
+        "type": "momentum",
+        "name": "momentum_roc_lt",
+        "absolute": true,
+        "op": "<",
+        "abs_value": 0,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_ppo",
+        "type": "momentum",
+        "name": "momentum_ppo_gt",
+        "absolute": true,
+        "op": ">",
+        "abs_value": 0,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_ppo",
+        "type": "momentum",
+        "name": "momentum_ppo_lt",
+        "absolute": true,
+        "op": "<",
+        "abs_value": 0,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_pvo",
+        "type": "momentum",
+        "name": "momentum_pvo_gt",
+        "absolute": true,
+        "op": ">",
+        "abs_value": 0,
+        "rel_value": null
+    },
+    {
+        "indicator": "momentum_pvo",
+        "type": "momentum",
+        "name": "momentum_pvo_lt",
+        "absolute": true,
+        "op": "<",
+        "abs_value": 0,
+        "rel_value": null
+    }
+]

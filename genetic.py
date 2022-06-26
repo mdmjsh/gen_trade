@@ -8,8 +8,9 @@ import logging
 from generate_strategy import main as generate
 from load_strategy import query_strategy
 from memory_profiler import profile
-from async_caller import process_future_caller
+from async_caller import process_future_caller, threaded_future_caller
 
+df = pd.read_csv('BTCUSDC_indicators.csv')
 
 @profile
 def main():
@@ -23,19 +24,20 @@ def main():
     """
 
     strategies = generate()
-    df = pd.read_csv('BTCUSDC_indicators.csv')
     df['converted_open_ts'] = pd.to_datetime(df['open_ts'], unit='ms')
     df.index = df['open_ts']
-    results = []
-    logger = logging.getLogger()
+    # import ipdb;ipdb.set_trace()
+    res = threaded_future_caller(run_strategy, strategies[:2])
 
-    for strategy in strategies:
-        logger.info(f"Querying strategy {strategy}")
-        subset = query_strategy(df, strategy)
-        res = find_profit_in_window(df, subset, strategy)
-        logger.info(f"Strategy got results {res}")
-        results.append(pd.DataFrame(res))
     return res
+
+def run_strategy(strategy):
+    logger = logging.getLogger()
+    logger.info(f"Querying strategy {strategy}")
+    subset = query_strategy(df, strategy)
+    res = find_profit_in_window(df, subset, strategy)
+    logger.info(f"Strategy got results {res}")
+    return pd.DataFrame(res)
 
 def find_profit_in_window(df: pd.DataFrame, subset: pd.DataFrame, strategy: dict) -> List[dict]:
     """ Points 3,4 from `main`

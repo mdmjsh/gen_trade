@@ -77,8 +77,11 @@ def main():
     if args.test:
         indicators = ascii_lowercase
     else:
-        with open('signals.json', 'r') as fi:
+        with open('signals/absolute_signals.json', 'r') as fi:
             indicators = json.load(fi)
+        with open('signals/relative_signals.json', 'r') as fi:
+            relative = json.load(fi)
+        indicators.extend(relative)
 
     strategies = []
     for _ in range(args.population_size):
