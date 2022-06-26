@@ -2,7 +2,7 @@ import pandas as pd
 import json
 
 """
-Write blank signals to signals.json so that the values can be filled out.
+Write blank signals to signals.json so that the values can be manually completed.
 
 """
 df = pd.read_csv('BTCUSDC_indicators.csv')
