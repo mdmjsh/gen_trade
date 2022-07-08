@@ -8,9 +8,21 @@ import logging
 from generate_strategy import main as generate
 from load_strategy import query_strategy
 from memory_profiler import profile
+from generate_blank_signals import INDICATORS
 from async_caller import process_future_caller, threaded_future_caller
 
-df = pd.read_csv('BTCUSDC_indicators.csv')
+
+
+def load_df():
+    df = pd.read_csv('BTCUSDC_indicators.csv')
+    return add_previous_window_values(df)
+
+def add_previous_window_values(df):
+    # shift the whole df back one place
+    shifted = df.shift(1)
+    for ind in INDICATORS:
+        df[f'{ind}_previous'] = shifted[ind]
+    return df
 
 @profile
 def main():
@@ -22,16 +34,17 @@ def main():
         4. For each of these windows find the highest point (profit)
     5. calculate the average of these profits points
     """
-
+    df = load_df()
     strategies = generate()
     df['converted_open_ts'] = pd.to_datetime(df['open_ts'], unit='ms')
     df.index = df['open_ts']
-    # import ipdb;ipdb.set_trace()
-    res = threaded_future_caller(run_strategy, strategies[:2])
+    # res = threaded_future_caller(run_strategy, df, strategies[:2])
+
+    res = [run_strategy(df, strat) for strat in strategies[:2]]
 
     return res
 
-def run_strategy(strategy):
+def run_strategy(df, strategy):
     logger = logging.getLogger()
     logger.info(f"Querying strategy {strategy}")
     subset = query_strategy(df, strategy)

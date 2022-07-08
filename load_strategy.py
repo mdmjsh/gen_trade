@@ -2,29 +2,38 @@ import pandas as pd
 from typing import Callable, Dict, Sequence
 
 
-def get_callback(callback_value: str, indicator):
-    CALLBACKS = dict(PRICE_DIVERGENCE_UP=[lambda x: x[indicator] > x['close'], None, None])
-    return CALLBACKS[callback_value]
-
-def make_callback(df: pd.DataFrame, callback_value: str, indicator:str):
-    callback, args, kwargs = get_callback(callback_value, indicator)
-    return df.loc[df.apply(callback, axis=1)]
+# def make_callback(df: pd.DataFrame, indicator: Dict):
+#     import ipdb;ipdb.set_trace()
+#     callback, args, kwargs = get_callback(indicator)
+#     return df.loc[df.apply(callback, axis=1)]
 
 
-def load_from_object(strategy: Dict):
+def get_callback(indicator : Dict) -> str:
+    """Returns the relative string for the indicator passed in.
+    """
+    if indicator['rel_value'] == 'MA':
+        # trend_sma_slow / trend_sma_fast available
+        return f"{indicator['indicator']} {indicator['op']} trend_sma_slow"
+    elif indicator['rel_value'] == 'PREVIOUS_PERIOD':
+        return f"{indicator['indicator']} {indicator['op']} {indicator['indicator']}_previous"
+
+def load_from_object(df: pd.DataFrame, strategy: Dict):
+
     parsed = []
     print(f"STRATEGY: {strategy}")
+    import ipdb;ipdb.set_trace()
     conjunctions = strategy['conjunctions']
 
     if len(conjunctions) != len(strategy['indicators']) -1:
         raise RuntimeError(f"Strategy does not have correct number of conjunctions! {strategy}")
+
 
     for indicator in strategy['indicators']:
         if indicator["absolute"]:
             _parsed = f"{indicator['indicator']} {indicator['op']} {indicator['abs_value']}"
         else:
             # NB Need to pass DF in here somehow...
-            _parsed = f"{indicator['indicator']} {indicator['op']} {make_callback(indicator['rel_value'])}"
+            _parsed = get_callback(indicator)
         parsed.append(_parsed)
 
     if conjunctions:
@@ -40,5 +49,5 @@ def load_from_object(strategy: Dict):
 
 
 def query_strategy(df: pd.DataFrame, strategy: Dict):
-    query = load_from_object(strategy)
+    query = load_from_object(df, strategy)
     return df.query(query)
