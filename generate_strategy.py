@@ -1,4 +1,5 @@
 # See Algorithn 1: Strategy Generation
+import io
 import random
 import logging
 import sys
@@ -6,16 +7,23 @@ import argparse
 import json
 from string import ascii_lowercase
 
+
 MIN_INDICATORS = 2
 MAX_SAME_CLASS_INDICATORS = 2
 MAX_STRATEGY_INDICATORS = 4
-POPULATION_SIZE = 100
+POPULATION_SIZE = 10
 CONJUNCTIONS = ['and', 'or', 'and not', 'or not']
+
+with open('signals/absolute_signals.json', 'r') as fi:
+    LOADED_INDICATORS = json.load(fi)
+with open('signals/relative_signals.json', 'r') as fi:
+    relative = json.load(fi)
+    LOADED_INDICATORS.extend(relative)
 
 
 def choose_indicator(indicators, max_same_class, same_class_indicators):
     indicator = random.choice(indicators)
-    if same_class_indicators.get(str(indicator.__class__), -1) + 1 > max_same_class:
+    if same_class_indicators.get(indicator['type'], -1) + 1 > max_same_class:
         # Need to subset indicators to avoid hitting max recursion depth.
         _indicators = [
             x for x in indicators if x['type'] != indicator['type']]
@@ -77,11 +85,7 @@ def main():
     if args.test:
         indicators = ascii_lowercase
     else:
-        with open('signals/absolute_signals.json', 'r') as fi:
-            indicators = json.load(fi)
-        with open('signals/relative_signals.json', 'r') as fi:
-            relative = json.load(fi)
-        indicators.extend(relative)
+        indicators = LOADED_INDICATORS
 
     strategies = []
     for _ in range(args.population_size):

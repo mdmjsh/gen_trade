@@ -11,17 +11,28 @@ from typing import Callable, Dict, Sequence
 def get_callback(indicator : Dict) -> str:
     """Returns the relative string for the indicator passed in.
     """
+    {'ADX_NEG',
+    'AROON_DOWN',
+    'AROON_UP',
+    'MA',
+    'PPO_SIGNAL',
+    'PREVIOUS_PERIOD',
+    'STOCH_RSI_D',
+    'STOCH_RSI_K'}
+
     if indicator['rel_value'] == 'MA':
         # trend_sma_slow / trend_sma_fast available
         return f"{indicator['indicator']} {indicator['op']} trend_sma_slow"
     elif indicator['rel_value'] == 'PREVIOUS_PERIOD':
         return f"{indicator['indicator']} {indicator['op']} {indicator['indicator']}_previous"
+    else:
+        return f"{indicator['indicator']} {indicator['op']} {indicator['indicator']}_previous"
+
 
 def load_from_object(df: pd.DataFrame, strategy: Dict):
 
     parsed = []
     print(f"STRATEGY: {strategy}")
-    import ipdb;ipdb.set_trace()
     conjunctions = strategy['conjunctions']
 
     if len(conjunctions) != len(strategy['indicators']) -1:
@@ -39,7 +50,10 @@ def load_from_object(df: pd.DataFrame, strategy: Dict):
     if conjunctions:
         result = ""
         for ix, strat in enumerate(parsed):
-            result += strat
+            try:
+                result += strat
+            except TypeError:
+                import ipdb;ipdb.set_trace()
             try:
                 result += f" {conjunctions[ix]} "
             except IndexError:
