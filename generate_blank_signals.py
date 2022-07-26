@@ -43,5 +43,5 @@ def main():
 if __name__ == "__main__":
     signals = main()
 
-    with open('signals.json', 'w+') as fi:
+    with open('relative_signals.json', 'w+') as fi:
         json.dump(signals, fi)

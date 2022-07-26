@@ -12,9 +12,9 @@ def threaded_future_caller(func: callable, iterable: Iterable, *constants):
 def future_caller(func: callable, iterable, Executor=ThreadPoolExecutor, *constants):
     """Wrapper to map the callable to the iteratable using the `constants` as partial args for each call.
     """
+
     with Executor() as executor:
         fun = partial(func, *constants)
-        print(fun.args)
         results = executor.map(fun, iterable)
 
     return tuple(results)

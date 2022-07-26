@@ -6,12 +6,14 @@ import sys
 import argparse
 import json
 from string import ascii_lowercase
+from typing import Iterable, Sequence
+import uuid
 
 
 MIN_INDICATORS = 2
 MAX_SAME_CLASS_INDICATORS = 2
 MAX_STRATEGY_INDICATORS = 4
-POPULATION_SIZE = 10
+POPULATION_SIZE = 4
 CONJUNCTIONS = ['and', 'or', 'and not', 'or not']
 
 with open('signals/absolute_signals.json', 'r') as fi:
@@ -43,9 +45,15 @@ def choose_num_indicators(max_indicators):
     return random.choice(range(MIN_INDICATORS, max_indicators + 1))
 
 
-def generate(base_indicator, indicators, conjunctions, max_indicators=MAX_STRATEGY_INDICATORS, max_same_class=MAX_SAME_CLASS_INDICATORS):
+def make_strategy_from_indicators(indicators:Sequence, conjunctions=CONJUNCTIONS ):
+    """Given an iterable of indicators, turn it into a well form strategy."""
+    return dict(id=str(uuid.uuid4()), indicators=indicators, conjunctions=[random.choice(conjunctions) for _ in range(len(indicators) -1)])
+
+def generate(base_indicator, indicators, conjunctions=CONJUNCTIONS, max_indicators=MAX_STRATEGY_INDICATORS, max_same_class=MAX_SAME_CLASS_INDICATORS):
+    """Generate a strategy with the base_indicator as the first indicator.
+    """
     # nb range is 0 indexed and exclusive
-    strategy = dict(indicators=[base_indicator], conjunctions=[])
+    strategy = dict(id=str(uuid.uuid4()), indicators=[base_indicator], conjunctions=[])
     same_class_indicators = {base_indicator['type']: 1}
     indicators = pop_indicator(base_indicator, indicators)
 
@@ -61,7 +69,7 @@ def generate(base_indicator, indicators, conjunctions, max_indicators=MAX_STRATE
         strategy['indicators'].append(ind)
         indicators = pop_indicator(ind, indicators)
     logger = logging.getLogger()
-    logger.info(f"Generated strategy {strategy}")
+    # logger.info(f"Generated strategy {strategy}")
     return strategy
 
 def main():

@@ -33,11 +33,11 @@ def load_from_object(df: pd.DataFrame, strategy: Dict):
 
     parsed = []
     print(f"STRATEGY: {strategy}")
-    conjunctions = strategy['conjunctions']
+
+    conjunctions = strategy.get('conjunctions', [])
 
     if len(conjunctions) != len(strategy['indicators']) -1:
         raise RuntimeError(f"Strategy does not have correct number of conjunctions! {strategy}")
-
 
     for indicator in strategy['indicators']:
         if indicator["absolute"]:
