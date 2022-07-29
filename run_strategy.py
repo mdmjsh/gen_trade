@@ -71,27 +71,6 @@ def find_profit_in_window(df: pd.DataFrame, subset: pd.DataFrame, strategy: dict
             window = df.loc[mask]
 
             if not window.empty:
-                high = window['close'].max()
-                low = window['close'].min()
-
-                # edge case: multiple rows can close with the same value, hence locate the first occurence
-                high_point = window.loc[window['open_ts'] ==
-                                        window[window['close'] == high].index.min()]
-                low_point = window.loc[window['open_ts'] ==
-                                    window[window['close'] == low].index.min()]
-                # delta between window open and high point
-                max_profit = high - row['open']
-                max_loss = low - row['open']
-
-                high_timestamp = pd.Timestamp(
-                    high_point['converted_open_ts'].values[0])
-                high_delta = high_timestamp - row['converted_open_ts']
-                profit_steps = high_delta.components.hours * 15 + high_delta.components.minutes
-
-                low_timestamp = pd.Timestamp(
-                    low_point['converted_open_ts'].values[0])
-                low_delta = (low_timestamp - row['converted_open_ts'])
-                loss_steps = low_delta.components.hours * 15 + low_delta.components.minutes
 
                 target = row.open * (1 + TARGET)
                 stop_loss = row.open * (1 - STOP_LOSS)
@@ -104,10 +83,6 @@ def find_profit_in_window(df: pd.DataFrame, subset: pd.DataFrame, strategy: dict
                         high=row.high,
                         low=row.low,
                         result=trade_result,
-                        profit=dict(
-                            max=max_profit, timestamp=high_timestamp, n_steps=profit_steps),
-                        loss=dict(
-                            max=max_loss, timestamp=low_timestamp, n_steps=loss_steps),
                         open_timestamp=row['converted_open_ts'])
                 # performance used for fitness function
                 if res['result'] == HIT:
@@ -147,3 +122,35 @@ def get_trade_result(window: pd.Series, target: float, stop_loss: float) -> str:
         result = NA
     return result
 
+
+def get_window_performance(window: pd.Series, row:pd.Series) -> Dict:
+    """Finds the high and lowest points of a trade window and time deltas between them.
+    """
+    high = window['close'].max()
+    low = window['close'].min()
+
+    # edge case: multiple rows can close with the same value, hence locate the first occurence
+    high_point = window.loc[window['open_ts'] ==
+                            window[window['close'] == high].index.min()]
+    low_point = window.loc[window['open_ts'] ==
+                        window[window['close'] == low].index.min()]
+    # delta between window open and high point
+    max_profit = high - row['open']
+    max_loss = low - row['open']
+
+    high_timestamp = pd.Timestamp(
+        high_point['converted_open_ts'].values[0])
+    high_delta = high_timestamp - row['converted_open_ts']
+    profit_steps = high_delta.components.hours * 15 + high_delta.components.minutes
+
+    low_timestamp = pd.Timestamp(
+        low_point['converted_open_ts'].values[0])
+    low_delta = (low_timestamp - row['converted_open_ts'])
+    loss_steps = low_delta.components.hours * 15 + low_delta.components.minutes
+
+    return dict(max_profit=max_profit,
+    high_timestamp=high_timestamp,
+    profit_steps=profit_steps,
+    max_loss=max_loss,
+    low_timestamp=low_timestamp,
+    loss_steps=loss_steps)

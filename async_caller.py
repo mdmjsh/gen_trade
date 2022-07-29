@@ -1,5 +1,4 @@
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
-from concurrent.futures._base import Future
 from functools import partial
 from typing import Iterable
 

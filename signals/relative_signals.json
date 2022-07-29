@@ -1806,7 +1806,7 @@
         "absolute": false,
         "op": ">",
         "abs_value": null,
-        "rel_value": "ADX_NEG"
+        "rel_value": "TREND_ADX_NEG"
     },
     {
         "indicator": "trend_adx_pos",
@@ -1815,7 +1815,7 @@
         "absolute": false,
         "op": "<",
         "abs_value": null,
-        "rel_value": "ADX_NEG"
+        "rel_value": "TREND_ADX_NEG"
     },
     {
         "indicator": "trend_adx_neg",
@@ -1833,7 +1833,7 @@
         "absolute": false,
         "op": "<",
         "abs_value": null,
-        "rel_value": "ADX_NEG"
+        "rel_value": "TREND_ADX_NEG"
     },
     {
         "indicator": "trend_adx_neg",
@@ -1842,7 +1842,7 @@
         "absolute": false,
         "op": ">",
         "abs_value": null,
-        "rel_value": "ADX_NEG"
+        "rel_value": "TREND_ADX_NEG"
     },
     {
         "indicator": "trend_adx_neg",
@@ -1878,7 +1878,7 @@
         "absolute": false,
         "op": ">",
         "abs_value": null,
-        "rel_value": "AROON_DOWN"
+        "rel_value": "TREND_AROON_DOWN"
     },
     {
         "indicator": "trend_aroon_up",
@@ -1887,7 +1887,7 @@
         "absolute": false,
         "op": "<",
         "abs_value": null,
-        "rel_value": "AROON_DOWN"
+        "rel_value": "TREND_AROON_DOWN"
     },
     {
         "indicator": "trend_aroon_down",
@@ -1905,7 +1905,7 @@
         "absolute": false,
         "op": "<",
         "abs_value": null,
-        "rel_value": "AROON_UP"
+        "rel_value": "TREND_AROON_UP"
     },
     {
         "indicator": "trend_aroon_down",
@@ -1914,7 +1914,7 @@
         "absolute": false,
         "op": ">",
         "abs_value": null,
-        "rel_value": "AROON_UP"
+        "rel_value": "TREND_AROON_UP"
     },
     {
         "indicator": "trend_aroon_ind",
@@ -2013,7 +2013,7 @@
         "absolute": false,
         "op": ">",
         "abs_value": null,
-        "rel_value": "STOCH_RSI_D"
+        "rel_value": "MOMENTUM_STOCH_RSI_D"
     },
     {
         "indicator": "momentum_stoch_rsi_k",
@@ -2022,7 +2022,7 @@
         "absolute": false,
         "op": "<",
         "abs_value": null,
-        "rel_value": "STOCH_RSI_D"
+        "rel_value": "MOMENTUM_STOCH_RSI_D"
     },
     {
         "indicator": "momentum_stoch_rsi_d",
@@ -2049,7 +2049,7 @@
         "absolute": false,
         "op": ">",
         "abs_value": null,
-        "rel_value": "STOCH_RSI_K"
+        "rel_value": "MOMENTUM_STOCH_RSI_K"
     },
     {
         "indicator": "momentum_stoch_rsi_d",
@@ -2058,7 +2058,7 @@
         "absolute": false,
         "op": "<",
         "abs_value": null,
-        "rel_value": "STOCH_RSI_K"
+        "rel_value": "MOMENTUM_STOCH_RSI_K"
     },
 
     {
@@ -2086,7 +2086,7 @@
         "absolute": false,
         "op": ">",
         "abs_value": null,
-        "rel_value": "PPO_SIGNAL"
+        "rel_value": "MOMENTUM_PPO_SIGNAL"
     },
     {
         "indicator": "momentum_ppo",
@@ -2095,7 +2095,7 @@
         "absolute": false,
         "op": "<",
         "abs_value": null,
-        "rel_value": "PPO_SIGNAL"
+        "rel_value": "MOMENTUM_PPO_SIGNAL"
     },
     {
         "indicator": "momentum_pvo",

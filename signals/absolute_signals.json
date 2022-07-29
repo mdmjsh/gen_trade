@@ -18,15 +18,6 @@
         "rel_value": null
     },
     {
-        "indicator": "volume_sma_em",
-        "type": "volume",
-        "name": "volume_sma_em_lt",
-        "absolute": true,
-        "op": "<=",
-        "abs_value": null,
-        "rel_value": null
-    },
-    {
         "indicator": "volume_mfi",
         "type": "volume",
         "name": "Money Flow Index",

@@ -13,7 +13,7 @@ import uuid
 MIN_INDICATORS = 2
 MAX_SAME_CLASS_INDICATORS = 2
 MAX_STRATEGY_INDICATORS = 4
-POPULATION_SIZE = 4
+POPULATION_SIZE = 10
 CONJUNCTIONS = ['and', 'or', 'and not', 'or not']
 
 with open('signals/absolute_signals.json', 'r') as fi:

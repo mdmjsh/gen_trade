@@ -1,6 +1,5 @@
 from copy import deepcopy
-from functools import partial
-from itertools import repeat
+from multiprocessing import parent_process
 import random
 from typing import Callable, Dict, List, Tuple
 
@@ -11,10 +10,16 @@ import pandas as pd
 import logging
 from generate_strategy import main as generate_main
 from generate_strategy import generate, POPULATION_SIZE
-from load_strategy import query_strategy
 from memory_profiler import profile
 from generate_blank_signals import INDICATORS
 from run_strategy import run_strategy
+
+
+# Test run:
+# population size 10,
+# 100 generations
+#
+# runtime: 21037 seconds
 
 # risk:reward ratio 2:1
 TARGET = 0.015
@@ -58,26 +63,21 @@ def main(trading_data: pd.DataFrame, strategies: List[Dict] = None, fitness_func
     """
     ranked_results = ranked_results or []
     logger = logging.getLogger(__name__)
-    from async_caller import process_future_caller, threaded_future_caller
-    from concurrent.futures import ProcessPoolExecutor
+    from async_caller import process_future_caller
 
     if generation <= max_generations:
         logger = logging.getLogger(__name__)
         logger.info(f"Running generation {generation}")
 
-        # with ProcessPoolExecutor() as executor:
-        #     fun = partial(run_strategy, trading_data)
-        #     results = tuple(executor.map(fun, strategies))
-        #     import ipdb;ipdb.set_trace()
         results = process_future_caller(
             run_strategy, strategies, trading_data)
 
         fitness = process_future_caller(fitness_function, results)
-
         ranking, weights = apply_ranking(fitness)
         ranked_results.append(ranking)
 
         logger.info(f"RECURSSING!")
+
         population = generate_population(ranking, weights)
         main(trading_data, population, fitness_function,
              generation=generation+1, max_generations=max_generations, ranked_results=ranked_results)
@@ -115,30 +115,30 @@ def apply_ranking(results: Tuple) -> Tuple[pd.DataFrame, Dict]:
 def generate_population(ranked: pd.DataFrame, weights: Dict) -> List[Dict]:
     """Applies ranking, cross over and mutation to create a new population"""
     # Ellitism - keep the two best solutions from the previous population
+
     ranked = ranked.reset_index()
+     # ellitism
     population = [ranked.iloc[0].strategy, ranked.iloc[1].strategy]
     logger = logging.getLogger(__name__)
-
     logger.info(f"generating new population of length {POPULATION_SIZE}")
 
     _weights = deepcopy(weights)
+
     while len(population) < POPULATION_SIZE:
-        try:
-            sampled = ranked.sample(2, weights=_weights.values())
-            ranked = ranked.drop(sampled.index)
-            for i in range(len(sampled)):
-                strat_id = sampled.iloc[i].strategy['id']
-                if strat_id in _weights:
-                    del _weights[strat_id]
-            # x,y will be used to created offspring, but also included in next (i.e. ellitism).
-            x, y = sampled.iloc[0], sampled.iloc[1]
-            offspring = cross_over_ppx(x.strategy, y.strategy)
-            population.append(offspring)
-        except ValueError:
-            import ipdb;ipdb.set_trace()
+        x, y = select_parents(ranked, _weights)
+        offspring = cross_over_ppx(x.strategy, y.strategy)
+        population.append(mutate(offspring))
     logger.info("Population created")
     return population
 
+def select_parents(ranked: pd.DataFrame, _weights: Dict, parents: Dict={}) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """Randomly sample parents to use for offspring generation"""
+    sampled = ranked.sample(2, weights=_weights.values())
+    x, y = sampled.iloc[0], sampled.iloc[1]
+    if (x.id,y.id) in parents:
+        return select_parents(ranked, _weights, parents)
+    parents[(x.id,y.id)] = 1
+    return x,y
 
 
 def cross_over_ppx(strat_x: Dict, strat_y: Dict) -> Dict:
@@ -203,6 +203,17 @@ def cross_over_pmx(strat_x: Dict, strat_y: Dict) -> Tuple[Dict, Dict]:
 
     return child_x, child_y
 
+def mutate(strategy: List):
+    _strat = deepcopy(strategy)
+    abs_strats = [x for x in _strat['indicators'] if x['absolute']]
+
+    if abs_strats:
+        mutate_ix = random.choice(range(len(abs_strats)))
+        mutate_ind = abs_strats[mutate_ix]
+        mutate_percent = random.choice(range(-20, 20)) /100
+        mutate_ind['abs_value'] = mutate_ind['abs_value'] * (1 + mutate_percent)
+
+    return _strat
 
 def is_profitable(max_profit: float, max_loss: float, high_timestamp: pd.Timestamp, low_timestamp: pd.Timestamp) -> bool:
     """Is the profitable high point before the max loss occurred?"""
@@ -234,7 +245,10 @@ if __name__ == "__main__":
     strategies = generate_main()
     start = arrow.utcnow()
     results = main(load_trading_data(), strategies,
-                   fitness_function, max_generations=10)
+                   fitness_function, max_generations=MAX_GENERATIONS)
     stop = arrow.utcnow()
+
+    df = pd.concat(results)
+
     import ipdb
     ipdb.set_trace()

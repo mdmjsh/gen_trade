@@ -1,5 +1,5 @@
 import pandas as pd
-from typing import Callable, Dict, Sequence
+from typing import Dict
 
 
 # def make_callback(df: pd.DataFrame, indicator: Dict):
@@ -11,14 +11,14 @@ from typing import Callable, Dict, Sequence
 def get_callback(indicator : Dict) -> str:
     """Returns the relative string for the indicator passed in.
     """
-    {'ADX_NEG',
-    'AROON_DOWN',
-    'AROON_UP',
-    'MA',
-    'PPO_SIGNAL',
-    'PREVIOUS_PERIOD',
-    'STOCH_RSI_D',
-    'STOCH_RSI_K'}
+    # {'ADX_NEG',
+    # 'AROON_DOWN',
+    # 'AROON_UP',
+    # 'MA',
+    # 'PPO_SIGNAL',
+    # 'PREVIOUS_PERIOD',
+    # 'STOCH_RSI_D',
+    # 'STOCH_RSI_K'}
 
     if indicator['rel_value'] == 'MA':
         # trend_sma_slow / trend_sma_fast available
@@ -26,10 +26,10 @@ def get_callback(indicator : Dict) -> str:
     elif indicator['rel_value'] == 'PREVIOUS_PERIOD':
         return f"{indicator['indicator']} {indicator['op']} {indicator['indicator']}_previous"
     else:
-        return f"{indicator['indicator']} {indicator['op']} {indicator['indicator']}_previous"
+        return f"{indicator['indicator']} {indicator['op']} {indicator['rel_value'].lower()}"
 
 
-def load_from_object(df: pd.DataFrame, strategy: Dict):
+def load_from_object(strategy: Dict):
 
     parsed = []
     print(f"STRATEGY: {strategy}")
@@ -38,6 +38,7 @@ def load_from_object(df: pd.DataFrame, strategy: Dict):
 
     if len(conjunctions) != len(strategy['indicators']) -1:
         raise RuntimeError(f"Strategy does not have correct number of conjunctions! {strategy}")
+
 
     for indicator in strategy['indicators']:
         if indicator["absolute"]:
@@ -50,10 +51,8 @@ def load_from_object(df: pd.DataFrame, strategy: Dict):
     if conjunctions:
         result = ""
         for ix, strat in enumerate(parsed):
-            try:
-                result += strat
-            except TypeError:
-                import ipdb;ipdb.set_trace()
+            # try:
+            result += strat
             try:
                 result += f" {conjunctions[ix]} "
             except IndexError:
@@ -63,5 +62,5 @@ def load_from_object(df: pd.DataFrame, strategy: Dict):
 
 
 def query_strategy(df: pd.DataFrame, strategy: Dict):
-    query = load_from_object(df, strategy)
+    query = load_from_object(strategy)
     return df.query(query)
