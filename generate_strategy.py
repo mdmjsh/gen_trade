@@ -13,7 +13,7 @@ import uuid
 MIN_INDICATORS = 2
 MAX_SAME_CLASS_INDICATORS = 2
 MAX_STRATEGY_INDICATORS = 4
-POPULATION_SIZE = 10
+POPULATION_SIZE = 3
 CONJUNCTIONS = ['and', 'or', 'and not', 'or not']
 
 with open('signals/absolute_signals.json', 'r') as fi:
@@ -62,6 +62,8 @@ def generate(base_indicator, indicators, conjunctions=CONJUNCTIONS, max_indicato
     for i in range(num_indicators - 1):
         if i <= num_indicators - 1:
             strategy['conjunctions'].append(random.choice(conjunctions))
+        # Enforce the first indicator to be an 'and'
+        strategy['conjunctions'][0] = 'and'
         ind = choose_indicator(
             indicators, max_same_class, same_class_indicators)
         count = same_class_indicators.get(ind['type'], 0)

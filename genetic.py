@@ -1,4 +1,5 @@
 from copy import deepcopy
+from math import log
 from multiprocessing import parent_process
 import random
 from typing import Callable, Dict, List, Tuple
@@ -69,10 +70,15 @@ def main(trading_data: pd.DataFrame, strategies: List[Dict] = None, fitness_func
         logger = logging.getLogger(__name__)
         logger.info(f"Running generation {generation}")
 
-        results = process_future_caller(
-            run_strategy, strategies, trading_data)
 
-        fitness = process_future_caller(fitness_function, results)
+        results = [run_strategy(trading_data, strat) for strat in strategies]
+
+        # results = process_future_caller(
+        #     run_strategy, strategies, trading_data)
+
+        # fitness = process_future_caller(fitness_function, results)
+        fitness = [fitness_function(x) for x in results]
+
         ranking, weights = apply_ranking(fitness)
         ranked_results.append(ranking)
 
@@ -84,23 +90,43 @@ def main(trading_data: pd.DataFrame, strategies: List[Dict] = None, fitness_func
     return ranked_results
 
 
+def fitness_function_ha_and_moon(strategy: pd.DataFrame) -> pd.DataFrame:
+    """Fitness function based on the Ha & Moon study.
+
+    g(r)i,j = log pc(i, j + k) / pc(i, j)
+    """
+
+    n_trades, win_percent, avg_percent_gain = fitness_metadata(strategy)
+
+    for ix in range(len(strategy)):
+        x = strategy.iloc[ix]
+        strategy.iloc[ix]['fitness'] = log((x.close + n_trades)/ x.close)
+    import ipdb;ipdb.set_trace()
+    return pd.DataFrame([{'id': strategy.iloc[0].strategy['id'], 'avg_percent_gain': avg_percent_gain, 'fitness': strategy.fitness,
+                        'n_trades':n_trades, 'win_percent': win_percent, 'strategy': strategy.iloc[0].strategy}])
+
+
+
 def fitness_function(strategy: pd.DataFrame) -> pd.DataFrame:
     """ Win percentage * number of trades gives a performance coeffient. That is the higher
     the WP / NT, the bigger the coeff. Returns gain on account * performance coeff.
     """
+    n_trades, win_percent, avg_percent_gain = fitness_metadata(strategy)
+    fitness = avg_percent_gain * (win_percent * n_trades)
+    return pd.DataFrame([{'id': strategy.iloc[0].strategy['id'], 'avg_percent_gain': avg_percent_gain, 'fitness': fitness,
+                        'n_trades':n_trades, 'win_percent': win_percent, 'strategy': strategy.iloc[0].strategy}])
+
+def fitness_metadata(strategy):
     try:
         n_trades = len(strategy.loc[strategy.result != NO_TRADES])
-        win_percent = len(
-            strategy.loc[strategy.result == 'TARGET_HIT']) / n_trades
+        win_percent = (len(
+            strategy.loc[strategy.result == 'TARGET_HIT']) / n_trades) * 100
         avg_percent_gain = (strategy.performance.sum() / n_trades) * 100
-        fitness = avg_percent_gain * (win_percent * n_trades)
     except (AttributeError, ZeroDivisionError):
         n_trades=0
         win_percent=0
         avg_percent_gain=0
-        fitness=0
-    return pd.DataFrame([{'id': strategy.iloc[0].strategy['id'], 'avg_percent_gain': avg_percent_gain, 'fitness': fitness,
-                        'n_trades':n_trades, 'win_percent': win_percent, 'strategy': strategy.iloc[0].strategy}])
+    return n_trades,win_percent,avg_percent_gain
 
 
 def apply_ranking(results: Tuple) -> Tuple[pd.DataFrame, Dict]:
@@ -245,10 +271,13 @@ if __name__ == "__main__":
     strategies = generate_main()
     start = arrow.utcnow()
     results = main(load_trading_data(), strategies,
-                   fitness_function, max_generations=MAX_GENERATIONS)
+                   fitness_function_ha_and_moon, max_generations=MAX_GENERATIONS)
     stop = arrow.utcnow()
 
     df = pd.concat(results)
 
     import ipdb
     ipdb.set_trace()
+
+
+df = pd.DataFrame([dict(a=1, b=2, c=3), dict(a=0,b=0, c=0)])

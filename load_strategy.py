@@ -1,3 +1,4 @@
+from copy import copy
 import pandas as pd
 from typing import Dict
 
@@ -29,7 +30,8 @@ def get_callback(indicator : Dict) -> str:
         return f"{indicator['indicator']} {indicator['op']} {indicator['rel_value'].lower()}"
 
 
-def load_from_object(strategy: Dict):
+def load_from_object(strategy: Dict) -> str:
+    """Original un-parenthesised version"""
 
     parsed = []
     print(f"STRATEGY: {strategy}")
@@ -61,6 +63,54 @@ def load_from_object(strategy: Dict):
     return parsed[0]
 
 
+def load_from_object_parenthesised(strategy: Dict) -> str:
+    """parenthesis disjunctives to ensure strategy quality"""
+    parsed = []
+    print(f"STRATEGY: {strategy}")
+
+    conjunctions = strategy.get('conjunctions', [])
+
+    if len(conjunctions) != len(strategy['indicators']) -1:
+        raise RuntimeError(f"Strategy does not have correct number of conjunctions! {strategy}")
+
+
+    for indicator in strategy['indicators']:
+        if indicator["absolute"]:
+            _parsed = f"{indicator['indicator']} {indicator['op']} {indicator['abs_value']}"
+        else:
+            # NB Need to pass DF in here somehow...
+            _parsed = get_callback(indicator)
+        parsed.append(_parsed)
+
+    if conjunctions:
+        result = ""
+        requires_closing = False
+        for ix, strat in enumerate(parsed):
+
+            _strat = copy(strat)
+            try:
+                conj = conjunctions[ix]
+                if requires_closing:
+                    _strat = f"{_strat})"
+                if 'or' in conj.lower():
+                    _strat = f"({_strat} {conj}"
+                else:
+                    _strat = f"{_strat} {conj}"
+                requires_closing = _strat[0] == '(' and _strat[-1] != ')'
+                result = f"{result} {_strat}"
+            except IndexError:
+                if requires_closing:
+                    result = f"{result} {_strat})"
+                else:
+                    result =  f"{result} {_strat}"
+        return result[1:] # remove additional whitespace
+    return parsed[0]
+
+
 def query_strategy(df: pd.DataFrame, strategy: Dict):
-    query = load_from_object(strategy)
+
+    query = load_from_object_parenthesised(strategy)
+    if ' or ' in query:
+        import ipdb;ipdb.set_trace()
+
     return df.query(query)
