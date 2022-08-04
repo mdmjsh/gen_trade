@@ -1,7 +1,7 @@
 import pandas as pd
 from typing import Dict, List
 import logging
-from load_strategy import query_strategy
+from load_strategy import load_from_object_parenthesised, query_strategy
 from numpy import datetime64
 import arrow
 
@@ -28,9 +28,13 @@ def run_strategy(df: pd.DataFrame, strategy: Dict):
     """
     logger = logging.getLogger(__name__)
     logger.info(f"Querying strategy {strategy['id']}")
-    entry_points = query_strategy(df, strategy)
+
+    # NB not a pure function as we update the strategy here, but hey-ho
+    strategy['parsed'] = load_from_object_parenthesised(strategy)
+    entry_points = query_strategy(df, query=strategy['parsed'])
+    logger.info(f"Found {len(entry_points)} potential trades...")
     res = find_profit_in_window(df, entry_points, strategy)
-    # logger.info(f"Strategy got results {res}")
+
     return pd.DataFrame(res)
 
 

@@ -38,10 +38,17 @@ def test_load_strategy(get_callback, strategy, callback_count, expected):
 
 
 @pytest.mark.parametrize("strategy,expected",
-                         [(dict(indicators=[RSI], conjunctions=[]), 'RSI >= 70'), (dict(indicators=[RSI, EMA_1, EMA_2], conjunctions=["AND", "OR"]),
-                             "RSI >= 70 AND (EMA >= Z OR EMA >= Z)"), (dict(indicators=[RSI, EMA_1, EMA_2], conjunctions=["AND", "NOT OR"]),
-                             "RSI >= 70 AND (EMA >= Z NOT OR EMA >= Z)"), (dict(indicators=[RSI, EMA_1, EMA_2, RSI], conjunctions=["AND",  "OR", "AND"]),
-                             "RSI >= 70 AND (EMA >= Z OR EMA >= Z) AND RSI >= 70")]
+                         [
+                             (dict(indicators=[RSI], conjunctions=[]), 'RSI >= 70'),
+                             (dict(indicators=[RSI, EMA_1, EMA_2], conjunctions=["AND", "OR"]),
+                             "RSI >= 70 AND (EMA >= Z OR EMA >= Z)"),
+                            (dict(indicators=[RSI, EMA_1, EMA_2], conjunctions=["AND", "NOT OR"]),
+                            "RSI >= 70 AND (EMA >= Z NOT OR EMA >= Z)"),
+                            (dict(indicators=[RSI, EMA_1, EMA_2, RSI], conjunctions=["AND",  "OR", "AND"]),
+                            "RSI >= 70 AND (EMA >= Z OR EMA >= Z AND RSI >= 70)"),
+                             (dict(indicators=[RSI, EMA_1, EMA_2, RSI], conjunctions=["AND",  "OR", "OR"]),
+                             "RSI >= 70 AND (EMA >= Z OR (EMA >= Z OR RSI >= 70))")
+                             ]
                          )
 @patch("load_strategy.get_callback")
 def test_load_strategy_parenthesised(get_callback, strategy, expected):

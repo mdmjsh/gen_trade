@@ -1,7 +1,8 @@
 from copy import copy
+from xxlimited import Str
 import pandas as pd
 from typing import Dict
-
+import logging
 
 # def make_callback(df: pd.DataFrame, indicator: Dict):
 #     import ipdb;ipdb.set_trace()
@@ -9,7 +10,7 @@ from typing import Dict
 #     return df.loc[df.apply(callback, axis=1)]
 
 
-def get_callback(indicator : Dict) -> str:
+def get_callback(indicator: Dict) -> str:
     """Returns the relative string for the indicator passed in.
     """
     # {'ADX_NEG',
@@ -34,13 +35,13 @@ def load_from_object(strategy: Dict) -> str:
     """Original un-parenthesised version"""
 
     parsed = []
-    print(f"STRATEGY: {strategy}")
 
     conjunctions = strategy.get('conjunctions', [])
 
-    if len(conjunctions) != len(strategy['indicators']) -1:
-        raise RuntimeError(f"Strategy does not have correct number of conjunctions! {strategy}")
-
+    if len(conjunctions) != len(strategy['indicators']) - 1:
+        raise RuntimeError(
+            f"Strategy does not have correct number of conjunctions! {strategy}"
+        )
 
     for indicator in strategy['indicators']:
         if indicator["absolute"]:
@@ -63,16 +64,16 @@ def load_from_object(strategy: Dict) -> str:
     return parsed[0]
 
 
-def load_from_object_parenthesised(strategy: Dict) -> str:
+def load_from_object_parenthesised(strategy: Dict, debug=False ) -> str:
     """parenthesis disjunctives to ensure strategy quality"""
     parsed = []
-    print(f"STRATEGY: {strategy}")
 
     conjunctions = strategy.get('conjunctions', [])
 
-    if len(conjunctions) != len(strategy['indicators']) -1:
-        raise RuntimeError(f"Strategy does not have correct number of conjunctions! {strategy}")
-
+    if len(conjunctions) != len(strategy['indicators']) - 1:
+        raise RuntimeError(
+            f"Strategy does not have correct number of conjunctions! {strategy}"
+        )
 
     for indicator in strategy['indicators']:
         if indicator["absolute"]:
@@ -84,33 +85,32 @@ def load_from_object_parenthesised(strategy: Dict) -> str:
 
     if conjunctions:
         result = ""
-        requires_closing = False
+        open_paren_count = 0
         for ix, strat in enumerate(parsed):
 
             _strat = copy(strat)
             try:
                 conj = conjunctions[ix]
-                if requires_closing:
-                    _strat = f"{_strat})"
                 if 'or' in conj.lower():
                     _strat = f"({_strat} {conj}"
                 else:
                     _strat = f"{_strat} {conj}"
-                requires_closing = _strat[0] == '(' and _strat[-1] != ')'
+                open_paren_count += int(_strat[0] == '(' and _strat[-1] != ')')
                 result = f"{result} {_strat}"
             except IndexError:
-                if requires_closing:
-                    result = f"{result} {_strat})"
-                else:
-                    result =  f"{result} {_strat}"
-        return result[1:] # remove additional whitespace
+                result = f"{result} {_strat}"
+                if open_paren_count:
+                    result += ')' * open_paren_count
+        # remove additional whitespace
+        res = result[1:]
+        logger = logging.getLogger(__name__)
+        logger.info(f"Generated strategy: {res}")
+        return res
     return parsed[0]
 
 
-def query_strategy(df: pd.DataFrame, strategy: Dict):
-
+def query_strategy(df: pd.DataFrame, strategy: Dict = None, query: str = None):
+    if query:
+        return df.query(query)
     query = load_from_object_parenthesised(strategy)
-    if ' or ' in query:
-        import ipdb;ipdb.set_trace()
-
     return df.query(query)

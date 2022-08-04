@@ -1,7 +1,7 @@
 import pandas as pd
 
 """Used for mapping trend directions to the raw data produced from `binance_download.py`
-This helpers have been seperated into their own module as they are used during the GP
+These helpers have been seperated into their own module as they are used during the GP
 to get the next window of data.
 """
 
@@ -41,6 +41,14 @@ def get_vstrong_trends(adx_df: pd.DataFrame) -> pd.DataFrame:
 def get_exstrong_trends(adx_df: pd.DataFrame) -> pd.DataFrame:
     return _filter_trend_strength(adx_df, limit=75, op='ge')
 
-def generate_trends(df:pd.DataFrame, periods: int=96):
+def generate_trends(df: pd.DataFrame, periods: int=96):
     """Yield data from the trend window. NB 96 = one day of 15 minute periods"""
     yield from df[:periods]
+
+def main():
+    df = pd.read_csv('BTCUSDC.csv')
+    df['trend_direction'] = df.apply(lambda x: trend_direction(x), axis=1)
+    df.to_csv('BTCUSDC_indicators.csv')
+
+if __name__ == "__main__":
+    main()

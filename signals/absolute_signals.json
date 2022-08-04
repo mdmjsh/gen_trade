@@ -176,7 +176,7 @@
         "name": "momentum_stoch_rsi_gt",
         "absolute": true,
         "op": ">=",
-        "abs_value": 80,
+        "abs_value": 0.8,
         "rel_value": null
     },
     {
@@ -185,7 +185,7 @@
         "name": "momentum_stoch_rsi_lt",
         "absolute": true,
         "op": "<=",
-        "abs_value": 20,
+        "abs_value": 0.2,
         "rel_value": null
     },
     {
