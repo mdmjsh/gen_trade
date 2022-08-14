@@ -18,6 +18,8 @@ pandas-ta = "^0.3.14-beta.0"
 arrow = "^1.2.2"
 memory-profiler = "^0.60.0"
 dill = "^0.3.5"
+boto3 = "^1.24.46"
+dask = "^2022.8.0"
 
 [tool.poetry.dev-dependencies]
 

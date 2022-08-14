@@ -1,11 +1,17 @@
-import pandas as pd
+import os
 import json
+# import pandas as pd
+# import dask.dataframe as dd
+from df_adapter import dfa
+
 """
 Write blank signals relative to signals.json -
 absolute signals have to be created by hand.
 
 """
-DF = pd.read_csv('BTCUSDC_indicators.csv')
+# DF = pd.read_csv('BTCUSDC_indicators.csv')
+
+DF = dfa.read_csv('BTCUSDC_indicators.csv')
 
 CATS = ['momentum', 'trend', 'volatility', 'volume']
 

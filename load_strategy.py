@@ -1,14 +1,9 @@
-from copy import copy
-from xxlimited import Str
-import pandas as pd
-from typing import Dict
 import logging
+from copy import copy
+from df_adapter import DFAdapter
+from typing import Dict
 
-# def make_callback(df: pd.DataFrame, indicator: Dict):
-#     import ipdb;ipdb.set_trace()
-#     callback, args, kwargs = get_callback(indicator)
-#     return df.loc[df.apply(callback, axis=1)]
-
+dfa = DFAdapter()
 
 def get_callback(indicator: Dict) -> str:
     """Returns the relative string for the indicator passed in.
@@ -109,7 +104,7 @@ def load_from_object_parenthesised(strategy: Dict, debug=False ) -> str:
     return parsed[0]
 
 
-def query_strategy(df: pd.DataFrame, strategy: Dict = None, query: str = None):
+def query_strategy(df: dfa.DataFrame, strategy: Dict = None, query: str = None) -> dfa.DataFrame:
     if query:
         return df.query(query)
     query = load_from_object_parenthesised(strategy)
