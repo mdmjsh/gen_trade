@@ -3,6 +3,8 @@ from copy import copy
 from df_adapter import DFAdapter
 from typing import Dict
 
+from logger import get_logger
+
 dfa = DFAdapter()
 
 def get_callback(indicator: Dict) -> str:
@@ -59,8 +61,8 @@ def load_from_object(strategy: Dict) -> str:
     return parsed[0]
 
 
-def load_from_object_parenthesised(strategy: Dict, debug=False ) -> str:
-    """parenthesis disjunctives to ensure strategy quality"""
+def load_from_object_parenthesised(strategy: Dict) -> str:
+    """parenthesis disjunctions to ensure strategy quality"""
     parsed = []
 
     conjunctions = strategy.get('conjunctions', [])
@@ -98,7 +100,7 @@ def load_from_object_parenthesised(strategy: Dict, debug=False ) -> str:
                     result += ')' * open_paren_count
         # remove additional whitespace
         res = result[1:]
-        logger = logging.getLogger(__name__)
+        logger = get_logger(__name__)
         logger.info(f"Generated strategy: {res}")
         return res
     return parsed[0]
@@ -108,4 +110,7 @@ def query_strategy(df: dfa.DataFrame, strategy: Dict = None, query: str = None) 
     if query:
         return df.query(query)
     query = load_from_object_parenthesised(strategy)
-    return df.query(query)
+    try:
+        return df.query(query).compute()
+    except AttributeError:
+        return df.query(query)

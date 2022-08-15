@@ -1,6 +1,6 @@
 import pandas as pd
 from typing import Dict, List
-import logging
+from logger import get_logger
 from helpers import make_pandas_df
 from load_strategy import load_from_object_parenthesised, query_strategy
 from numpy import datetime64
@@ -31,7 +31,7 @@ def run_strategy(df: pd.DataFrame, strategy: Dict):
     - find all entry points
     - find the profit/loss of each entry point
     """
-    logger = logging.getLogger(__name__)
+    logger = get_logger(__name__)
     logger.info(f"Querying strategy {strategy['id']}")
 
     # NB not a pure function as we update the strategy here, but hey-ho
@@ -54,9 +54,10 @@ def find_profit_in_window(
     2.a Set the trade period to one day.
     2.b For each of these windows find the highest point (profit)
 
-    NB that the subset passed in is all of trades with would execute for the entire dataset (i.e. 4 years worth of trades).
+    NB that the subset passed in is all of trades with would execute for the
+    entire dataset (i.e. 4 years worth of trades).
     """
-    # logger = logging.getLogger(__name__)
+    # logger = get_logger(__name__)
     results = []
 
     try:

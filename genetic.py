@@ -9,14 +9,13 @@ import arrow
 import sys
 import pandas as pd
 from df_adapter import dfa
-import logging
 from generate_strategy import main as generate_main
 from generate_strategy import generate
-from memory_profiler import profile
 from generate_blank_signals import INDICATORS
 from run_strategy import run_strategy
 from async_caller import process_future_caller
 from helpers import make_pandas_df, write_df_to_s3, base_arg_parser, POPULATION_SIZE
+from logger import get_logger
 
 # Test run:
 # population size 10,
@@ -48,7 +47,6 @@ def add_previous_window_values(df: dfa.DataFrame) -> dfa.DataFrame:
     return df
 
 
-# @profile
 def main(
     trading_data: dfa.DataFrame,
     strategies: List[Dict] = None,
@@ -58,7 +56,7 @@ def main(
     ranked_results: List = None,
     serial_debug: bool = False
 ):
-    """Main Genetic Algorthim. Logic:
+    """Main Genetic Algorithm. Logic:
 
     1. Subset the dataframe by the strategy (for each strategy)
     2. For each strategy:
@@ -73,10 +71,9 @@ def main(
     8. rank the solutions and return the best
     """
     ranked_results = ranked_results or []
-    logger = logging.getLogger(__name__)
+    logger = get_logger(__name__)
 
     if generation <= max_generations:
-        logger = logging.getLogger(__name__)
         logger.info(f"Running generation {generation}")
 
         # Serial invocation - for debugging
@@ -198,7 +195,7 @@ def generate_population(ranked: dfa.DataFrame, weights: Dict) -> List[Dict]:
     ranked = ranked.reset_index()
     # elitism
     population = [ranked.iloc[0].strategy, ranked.iloc[1].strategy]
-    logger = logging.getLogger(__name__)
+    logger = get_logger(__name__)
     logger.info(f"generating new population of length {POPULATION_SIZE}")
 
     _weights = deepcopy(weights)
@@ -251,7 +248,7 @@ def cross_over_ppx(strat_x: Dict, strat_y: Dict) -> Dict:
 
 def cross_over_pmx(strat_x: Dict, strat_y: Dict) -> Tuple[Dict, Dict]:
     """Partially matched cross over (PMX)."""
-    logger = logging.getLogger(__name__)
+    logger = get_logger(__name__)
 
     x_ind = strat_x["indicators"]
     y_ind = strat_y["indicators"]
@@ -340,12 +337,6 @@ def load_trading_data():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(
-        format="%(asctime)s%(levelname)s:%(message)s",
-        stream=sys.stderr,
-        level=logging.INFO,
-    )
-
     parser = base_arg_parser("Main genetic algorithm.")
     parser.add_argument("--write_s3", type=bool, help="exports data to s3.")
     parser.add_argument("--write_local", type=bool, help="exports data to local FS.")
@@ -358,8 +349,8 @@ if __name__ == "__main__":
     parser.set_defaults(
         write_s3=False,
         write_local=True,
-        generations=MAX_GENERATIONS,
-        s3_bucket=os.environ['BUCKET'],
+        generations=os.getenv('GENERATIONS', MAX_GENERATIONS),
+        s3_bucket=os.getenv('BUCKET'),
         serial_debug=False
     )
     args = parser.parse_args()
