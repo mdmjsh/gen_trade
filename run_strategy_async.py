@@ -1,5 +1,7 @@
+from asyncio.log import logger
 import pandas as pd
 from typing import Dict, List
+from async_caller import process_future_caller, threaded_future_caller
 from logger import get_logger
 from helpers import make_pandas_df
 from load_strategy import load_from_object_parenthesised, query_strategy
@@ -17,7 +19,7 @@ HIT = "TARGET_HIT"
 STOPPED = "STOPPED_OUT"
 NA = "NO_CLOSE_IN_WINDOW"
 NO_TRADES = "NO_ENTRIES_FOR_STRATEGY"
-CUTOFF_PERCENT = 1/3
+CUTOFF_PERCENT = 1 / 3
 
 
 def shift_period(timestamp: pd.Timestamp) -> datetime64:
@@ -64,67 +66,75 @@ def find_profit_in_window(
     # Don't evaluate trades which look like high false positive %
     trade_percent = len(subset) / len(df)
     if trade_percent >= CUTOFF_PERCENT:
-        logger.info(f"Strategy {strategy['id']} generated too many potential "
-                    f"trades ({trade_percent}%) - assuming it's rubbish.")
+        logger.info(
+            f"Strategy {strategy['id']} generated too many potential "
+            f"trades ({trade_percent}%) - assuming it's rubbish."
+        )
         return [no_trade_results(strategy, trade_percent)]
 
     if not len(subset):
         results.append(no_trade_results(strategy, trade_percent))
 
-    for ix in range(len(subset)):
-        row = subset.iloc[ix]
-        # Get a period of data since the trade opened
-        end = shift_period(row["converted_open_ts"])
-        mask = (df["converted_open_ts"] > row.converted_open_ts) & (
-            df["converted_open_ts"] <= end
-        )
-        window = df.loc[mask]
-
-        if not window.empty:
-
-            target = row.open * (1 + TARGET)
-            stop_loss = row.open * (1 - STOP_LOSS)
-
-            trade_result = get_trade_result(window, target, stop_loss)
-
-            res = dict(
-                strategy=strategy,
-                trend=row.trend_direction,
-                open=row.open,
-                close=row.close,
-                high=row.high,
-                low=row.low,
-                result=trade_result,
-                open_timestamp=row["converted_open_ts"],
-                trade_percent=trade_percent
-            )
-            # performance used for fitness function
-            if res["result"] == HIT:
-                res["performance"] = (target - row.open) / row.open
-            elif res["result"] == STOPPED:
-                res["performance"] = (stop_loss - row.open) / row.open
-            else:
-                res["performance"] = 0
-            # logger.info(f"Strategy {strategy['id']} got results {res}")
-            results.append(res)
+    results = process_future_caller(
+        assess_strategy_window,
+        range(len(subset)), df, subset, strategy, trade_percent,
+    )
     return results
+
+
+def assess_strategy_window(df, subset, strategy, trade_percent, ix):
+    # Get a period of data since the trade opened
+    row = subset.iloc[ix]
+
+    end = shift_period(row["converted_open_ts"])
+    mask = (df["converted_open_ts"] > row.converted_open_ts) & (
+        df["converted_open_ts"] <= end
+    )
+    window = df.loc[mask]
+
+    if not window.empty:
+        target = row.open * (1 + TARGET)
+        stop_loss = row.open * (1 - STOP_LOSS)
+
+        trade_result = get_trade_result(window, target, stop_loss)
+
+        res = dict(
+            strategy=strategy,
+            trend=row.trend_direction,
+            open=row.open,
+            close=row.close,
+            high=row.high,
+            low=row.low,
+            result=trade_result,
+            open_timestamp=row["converted_open_ts"],
+            trade_percent=trade_percent,
+        )
+        # performance used for fitness function
+        if res["result"] == HIT:
+            res["performance"] = (target - row.open) / row.open
+        elif res["result"] == STOPPED:
+            res["performance"] = (stop_loss - row.open) / row.open
+        else:
+            res["performance"] = 0
+            # logger.info(f"Strategy {strategy['id']} got results {res}")
+        res
 
 
 def no_trade_results(strategy, trade_percent):
     res = dict(
-                strategy=strategy,
-                trend="na",
-                open="na",
-                close="na",
-                high="na",
-                low="na",
-                result=NO_TRADES,
-                profit=dict(max=NO_TRADES, timestamp="na", n_steps=0),
-                loss=dict(max=NO_TRADES, timestamp="na", n_steps=0),
-                open_timestamp="na",
-                performance=0,
-                trade_percent=trade_percent
-            )
+        strategy=strategy,
+        trend="na",
+        open="na",
+        close="na",
+        high="na",
+        low="na",
+        result=NO_TRADES,
+        profit=dict(max=NO_TRADES, timestamp="na", n_steps=0),
+        loss=dict(max=NO_TRADES, timestamp="na", n_steps=0),
+        open_timestamp="na",
+        performance=0,
+        trade_percent=trade_percent,
+    )
     return res
 
 

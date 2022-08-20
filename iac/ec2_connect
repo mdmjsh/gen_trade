@@ -1,0 +1,2 @@
+#!/bin/bash
+ssh -i "~/.ssh/ga_ec2_rsa" $1

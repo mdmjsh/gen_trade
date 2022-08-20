@@ -1,4 +1,5 @@
 from copy import deepcopy
+import json
 from math import log
 import os
 import random
@@ -13,6 +14,7 @@ from generate_strategy import main as generate_main
 from generate_strategy import generate
 from generate_blank_signals import INDICATORS
 from run_strategy import run_strategy
+# from run_strategy_async import run_strategy
 from async_caller import process_future_caller
 from helpers import make_pandas_df, write_df_to_s3, base_arg_parser, POPULATION_SIZE
 from logger import get_logger
@@ -335,6 +337,17 @@ def load_trading_data():
     df.index = df["open_ts"]
     return df
 
+def load_strategies(path: str=None, max_indicators:int=None, max_same_class:int=None, population_size:int=None) -> List[Dict]:
+    if path:
+        with open (path, 'r'):
+            return json.load(path)
+
+    return generate_main(
+        max_indicators=max_indicators,
+        max_same_class=max_same_class,
+        population_size=population_size,
+    )
+
 
 if __name__ == "__main__":
     parser = base_arg_parser("Main genetic algorithm.")
@@ -345,21 +358,21 @@ if __name__ == "__main__":
     )
     parser.add_argument("--generations", type=int, help="N generations to run.")
     parser.add_argument("--serial_debug", type=bool, help='run without async for debugging')
+    parser.add_argument("--strategies_path", type=str, help='load strategies from this path rather than generating on the fly)
 
     parser.set_defaults(
         write_s3=False,
         write_local=True,
         generations=os.getenv('GENERATIONS', MAX_GENERATIONS),
         s3_bucket=os.getenv('BUCKET'),
-        serial_debug=False
+        serial_debug=False,
+        strategies_path=None,
     )
     args = parser.parse_args()
 
-    strategies = generate_main(
-        max_indicators=args.max_indicators,
-        max_same_class=args.max_same_class,
-        population_size=args.population_size,
-    )
+    strategies = load_strategies(args.strategies_path, args.max_indicators,
+        args.max_same_class,
+        args.population_size)
     start = arrow.utcnow()
     results = main(
         load_trading_data(),
@@ -380,3 +393,6 @@ if __name__ == "__main__":
         df.to_csv(fname)
     if args.write_s3:
         write_df_to_s3(df, args.s3_bucket, fname)
+
+    logger = get_logger(__name__)
+    import ipdb;ipdb.set_trace()
