@@ -395,4 +395,5 @@ if __name__ == "__main__":
         write_df_to_s3(df, args.s3_bucket, fname)
 
     logger = get_logger(__name__)
-    import ipdb;ipdb.set_trace()
+    logger.info(f"Finished in {(stop - start).seconds} seconds")
+
