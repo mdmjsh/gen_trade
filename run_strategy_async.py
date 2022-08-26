@@ -99,6 +99,8 @@ def assess_strategy_window(df, subset, strategy, trade_percent, ix):
         trade_result = get_trade_result(window, target, stop_loss)
 
         res = dict(
+            target=target,
+            stop_loss=stop_loss,
             strategy=strategy,
             trend=row.trend_direction,
             open=row.open,

@@ -1,9 +1,11 @@
+from ast import Call
 from copy import deepcopy
+from decimal import DivisionByZero
 import json
-from math import log
+
 import os
 import random
-from typing import Callable, Dict, List, Tuple
+from typing import Callable, Dict, Iterable, List, Tuple
 
 from generate_strategy import LOADED_INDICATORS, make_strategy_from_indicators
 import arrow
@@ -14,11 +16,18 @@ from generate_strategy import main as generate_main
 from generate_strategy import generate
 from generate_blank_signals import INDICATORS
 from run_strategy import run_strategy
-# from run_strategy_async import run_strategy
-from async_caller import process_future_caller
-from helpers import make_pandas_df, write_df_to_s3, base_arg_parser, POPULATION_SIZE
-from logger import get_logger
 
+from async_caller import process_future_caller
+from helpers import make_pandas_df, write_df_to_s3, base_arg_parser
+from logger import get_logger
+from env import POPULATION_SIZE, MAX_GENERATIONS
+from fitness_functions import (
+    fitness_function_ha_and_moon,
+    fitness_function_original,
+    fitness_simple_profit,
+)
+
+"""
 # Test run:
 # population size 10,
 # 100 generations
@@ -26,15 +35,24 @@ from logger import get_logger
 # runtime: 21037 seconds
 
 # risk:reward ratio 2:1
-TARGET = 0.015
-STOP_LOSS = TARGET / 2
 
-HIT = "TARGET_HIT"
-STOPPED = "STOPPED_OUT"
-NA = "NO_CLOSE_IN_WINDOW"
-NO_TRADES = "NO_ENTRIES_FOR_STRATEGY"
+# Second test run
+# 2022-08-21 15:19:05,962
+# INFO:Finished in 13753 seconds
+# 100 generations
 
-MAX_GENERATIONS = 100
+# third run
+# 2022-08-21T18:33:01.133223+00:00_results.csv
+# Finished in 63173 seconds
+# 500 generations
+
+
+run 4: after removing negation conjunctions
+original FF
+2022-08-23T13:36:00.298698+00:00_results.csv
+INFO:Finished in 34164 seconds
+"""
+
 
 def load_df():
     df = dfa.read_csv("BTCUSDC_indicators.csv")
@@ -56,7 +74,7 @@ def main(
     generation: int = 1,
     max_generations: int = MAX_GENERATIONS,
     ranked_results: List = None,
-    serial_debug: bool = False
+    serial_debug: bool = False,
 ):
     """Main Genetic Algorithm. Logic:
 
@@ -80,11 +98,18 @@ def main(
 
         # Serial invocation - for debugging
         if serial_debug:
-            results = [run_strategy(trading_data, strat) for strat in strategies]
-            fitness = [fitness_function(x) for x in results]
+            results = [
+                run_strategy(trading_data, ranked_results, strat)
+                for strat in strategies
+            ]
+            fitness = [fitness_function(serial_debug, x) for x in results]
+
         else:
-            results = process_future_caller(run_strategy, strategies, trading_data)
-            fitness = process_future_caller(fitness_function, results)
+
+            results = process_future_caller(
+                run_strategy, strategies, trading_data, ranked_results
+            )
+            fitness = process_future_caller(fitness_function, results, serial_debug)
 
         ranking, weights = apply_ranking(fitness)
         ranked_results.append(ranking)
@@ -99,86 +124,9 @@ def main(
             generation=generation + 1,
             max_generations=max_generations,
             ranked_results=ranked_results,
+            serial_debug=serial_debug,
         )
     return ranked_results
-
-
-def fitness_function_ha_and_moon(strategy: dfa.DataFrame) -> pd.DataFrame:
-    """Fitness function based on the Ha & Moon study.
-
-    g(r)i,j = log (pc(i, j + k) / pc(i, j))
-    """
-
-    n_trades, win_percent, avg_gain = fitness_metadata(strategy)
-    if n_trades == 0:
-        fitness = -1000
-        max_fitness = -1000
-    else:
-        strategy["fitness"] = strategy.apply(
-            lambda x: log((x.close + n_trades) / x.close), axis=1
-        )
-        fitness = strategy.fitness.mean()
-        max_fitness = strategy.fitness.max()
-    return pd.DataFrame(
-        [
-            {
-                "id": strategy.iloc[0].strategy["id"],
-                "avg_gain": avg_gain,
-                "fitness": fitness,
-                "max_fitness": max_fitness,
-                "n_trades": n_trades,
-                "win_percent": win_percent,
-                "strategy": strategy.iloc[0].strategy,
-            }
-        ]
-    )
-
-
-def fitness_function(strategy: dfa.DataFrame) -> pd.DataFrame:
-    """Win percentage * number of trades gives a performance coefficient.
-    That is the higher the WP / NT, the bigger the coeff.
-    Returns gain on account * performance coeff.
-    """
-    n_trades, win_percent, avg_gain = fitness_metadata(strategy)
-    if n_trades == 0:
-        fitness = -1000
-    else:
-        fitness = avg_gain * (win_percent * n_trades)
-    return pd.DataFrame(
-        [
-            {
-                "id": strategy.iloc[0].strategy["id"],
-                "avg_gain": avg_gain,
-                "fitness": fitness,
-                "n_trades": n_trades,
-                "win_percent": win_percent,
-                "strategy": strategy.iloc[0].strategy,
-            }
-        ]
-    )
-
-
-def fitness_metadata(strategy):
-    try:
-        # Deletion NB: no longer using this method as no trades should still
-        # be counted as the trade was entered.
-        # n_trades = len(strategy.loc[strategy.result != NO_TRADES])
-        # win_percent = (
-        #     len(strategy.loc[strategy.result == HIT]) / n_trades
-        # ) * 100
-        # avg_gain = (strategy.performance.mean() / n_trades) * 100
-
-        n_trades = len(strategy)
-        win_percent = (
-            len(strategy.loc[strategy.result == HIT]) / n_trades
-        ) * 100
-        avg_gain = strategy.performance.mean()
-
-    except (AttributeError, ZeroDivisionError):
-        n_trades = 0
-        win_percent = 0
-        avg_gain = 0
-    return n_trades, win_percent, avg_gain
 
 
 def apply_ranking(results: Tuple) -> Tuple[pd.DataFrame, Dict]:
@@ -337,9 +285,15 @@ def load_trading_data():
     df.index = df["open_ts"]
     return df
 
-def load_strategies(path: str=None, max_indicators:int=None, max_same_class:int=None, population_size:int=None) -> List[Dict]:
+
+def load_strategies(
+    path: str = None,
+    max_indicators: int = None,
+    max_same_class: int = None,
+    population_size: int = None,
+) -> List[Dict]:
     if path:
-        with open (path, 'r'):
+        with open(path, "r"):
             return json.load(path)
 
     return generate_main(
@@ -347,6 +301,13 @@ def load_strategies(path: str=None, max_indicators:int=None, max_same_class:int=
         max_same_class=max_same_class,
         population_size=population_size,
     )
+
+
+FITNESS_MAP = dict(
+    o=fitness_function_original,
+    h=fitness_function_ha_and_moon,
+    p=fitness_simple_profit,
+)
 
 
 if __name__ == "__main__":
@@ -357,35 +318,52 @@ if __name__ == "__main__":
         "--s3_bucket", type=str, help="bucket name to which data is written."
     )
     parser.add_argument("--generations", type=int, help="N generations to run.")
-    parser.add_argument("--serial_debug", type=bool, help='run without async for debugging')
-    parser.add_argument("--strategies_path", type=str, help='load strategies from this path rather than generating on the fly)
+    parser.add_argument(
+        "--serial_debug", type=bool, help="run without async for debugging"
+    )
+    parser.add_argument(
+        "--strategies_path",
+        type=str,
+        help="load strategies from this path rather than generating on the fly",
+    )
+    parser.add_argument(
+        "--fitness_function",
+        type=str,
+        help="fitness function use (h=ha_and_moon, o=original, p=profit)",
+    )
 
     parser.set_defaults(
         write_s3=False,
         write_local=True,
-        generations=os.getenv('GENERATIONS', MAX_GENERATIONS),
-        s3_bucket=os.getenv('BUCKET'),
+        generations=os.getenv("GENERATIONS", MAX_GENERATIONS),
+        s3_bucket=os.getenv("BUCKET"),
         serial_debug=False,
         strategies_path=None,
+        fitness_function="o",
     )
     args = parser.parse_args()
 
-    strategies = load_strategies(args.strategies_path, args.max_indicators,
+    strategies = load_strategies(
+        args.strategies_path,
+        args.max_indicators,
         args.max_same_class,
-        args.population_size)
+        args.population_size,
+    )
     start = arrow.utcnow()
     results = main(
         load_trading_data(),
         strategies,
-        fitness_function,
+        FITNESS_MAP[args.fitness_function],
         max_generations=args.generations,
-        serial_debug=args.serial_debug
+        serial_debug=args.serial_debug,
     )
     stop = arrow.utcnow()
 
     df = dfa.concat(results)
 
-    fname = f"{start.isoformat()}_results.csv"
+    fname = (
+        f"{start.isoformat()}_results_{args.fitness_function}_{args.generations}.csv"
+    )
 
     df = make_pandas_df(df)
 
@@ -396,4 +374,3 @@ if __name__ == "__main__":
 
     logger = get_logger(__name__)
     logger.info(f"Finished in {(stop - start).seconds} seconds")
-

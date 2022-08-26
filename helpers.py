@@ -1,3 +1,4 @@
+from importlib.resources import path
 import os
 import boto3
 import argparse
@@ -5,13 +6,12 @@ import pandas as pd
 from io import StringIO
 
 from df_adapter import DFAdapter
-
-S3_RESOURCE = boto3.resource("s3", region_name="eu-west-1")
-MIN_INDICATORS = int(os.getenv('MIN_INDICATORS', 2))
-MAX_SAME_CLASS_INDICATORS = int(os.getenv('MAX_SAME_CLASS_INDICATORS', 2))
-MAX_STRATEGY_INDICATORS = int(os.getenv('MAX_STRATEGY_INDICATORS', 4))
-POPULATION_SIZE = int(os.getenv('POPULATION_SIZE', 10))
-CONJUNCTIONS = ["and", "or", "and not", "or not"]
+from env import (
+    S3_RESOURCE,
+    POPULATION_SIZE,
+    MAX_STRATEGY_INDICATORS,
+    MAX_SAME_CLASS_INDICATORS,
+)
 
 
 def make_pandas_df(df: DFAdapter) -> pd.DataFrame:
@@ -21,6 +21,16 @@ def make_pandas_df(df: DFAdapter) -> pd.DataFrame:
     except AttributeError:
         # df already is a pandas df
         return df
+
+
+def get_latest_path(path: str, suffix: str | None = None) -> path:
+    paths = []
+    for entry in os.scandir(path):
+        if entry.is_dir():
+            continue
+        if suffix and entry.name.endswith(suffix):
+            paths.append(entry)
+    return max(paths, key=os.path.getctime).path
 
 
 def write_df_to_s3(df: pd.DataFrame, bucket: str, name: str):

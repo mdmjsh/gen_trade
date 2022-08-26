@@ -5,6 +5,7 @@ from helpers import make_pandas_df
 from load_strategy import load_from_object_parenthesised, query_strategy
 from numpy import datetime64
 import arrow
+from env import TARGET, STOP_LOSS, HIT, STOPPED, NA, NO_TRADES, CUTOFF_PERCENT
 
 # example multiple disjunct strategy
 # volatility_dcm < volatility_dcm_previous and (trend_psar_up > trend_sma_slow or (volatility_kchi < volatility_kchi_previous or trend_ema_slow < trend_sma_slow))
@@ -17,7 +18,14 @@ HIT = "TARGET_HIT"
 STOPPED = "STOPPED_OUT"
 NA = "NO_CLOSE_IN_WINDOW"
 NO_TRADES = "NO_ENTRIES_FOR_STRATEGY"
-CUTOFF_PERCENT = 1/3
+
+
+def win(x):
+    return x * (1 + TARGET)
+
+
+def loss(x):
+    return x * (1 - STOP_LOSS)
 
 
 def shift_period(timestamp: pd.Timestamp) -> datetime64:
@@ -26,20 +34,33 @@ def shift_period(timestamp: pd.Timestamp) -> datetime64:
     return datetime64(ts.shift(days=1).shift(microseconds=-1).isoformat())
 
 
-def run_strategy(df: pd.DataFrame, strategy: Dict):
+def short_cut_elite(ranked_results, strategy) -> pd.Series:
+    try:
+        ranked = ranked_results[0]
+    except IndexError:
+        return pd.Series()
+    else:
+        return ranked.loc[ranked.id == strategy["id"]]
+
+
+def run_strategy(trading_data: pd.DataFrame, ranked_results: List, strategy: Dict):
     """For each strategy:
     - Set the trade period to one day.
     - find all entry points
     - find the profit/loss of each entry point
     """
     logger = get_logger(__name__)
+    elite = short_cut_elite(ranked_results, strategy)
+    if len(elite):
+        logger.info(f"Found {str(elite.id)} strategy - using cached backtest.")
+        return elite
     logger.info(f"Querying strategy {strategy['id']}")
 
     # NB not a pure function as we update the strategy here, but hey-ho
     strategy["parsed"] = load_from_object_parenthesised(strategy)
-    entry_points = query_strategy(df, query=strategy["parsed"])
+    entry_points = query_strategy(trading_data, query=strategy["parsed"])
 
-    df = make_pandas_df(df)
+    df = make_pandas_df(trading_data)
     entry_points = make_pandas_df(entry_points)
     logger.info(f"Found {len(entry_points)} potential trades...")
 
@@ -64,8 +85,10 @@ def find_profit_in_window(
     # Don't evaluate trades which look like high false positive %
     trade_percent = len(subset) / len(df)
     if trade_percent >= CUTOFF_PERCENT:
-        logger.info(f"Strategy {strategy['id']} generated too many potential "
-                    f"trades ({trade_percent}%) - assuming it's rubbish.")
+        logger.info(
+            f"Strategy {strategy['id']} generated too many potential "
+            f"trades ({trade_percent}%) - assuming it's rubbish."
+        )
         return [no_trade_results(strategy, trade_percent)]
 
     if not len(subset):
@@ -82,12 +105,18 @@ def find_profit_in_window(
 
         if not window.empty:
 
-            target = row.open * (1 + TARGET)
-            stop_loss = row.open * (1 - STOP_LOSS)
+            target = win(row.open)
+            stop_loss = loss(row.open)
 
-            trade_result = get_trade_result(window, target, stop_loss)
+            trade_result, hit_at, stopped_at = get_trade_result(
+                window, target, stop_loss
+            )
 
             res = dict(
+                target=target,
+                hit_at=hit_at,
+                stopped_at=stopped_at,
+                stop_loss=stop_loss,
                 strategy=strategy,
                 trend=row.trend_direction,
                 open=row.open,
@@ -96,7 +125,7 @@ def find_profit_in_window(
                 low=row.low,
                 result=trade_result,
                 open_timestamp=row["converted_open_ts"],
-                trade_percent=trade_percent
+                trade_percent=trade_percent,
             )
             # performance used for fitness function
             if res["result"] == HIT:
@@ -105,30 +134,32 @@ def find_profit_in_window(
                 res["performance"] = (stop_loss - row.open) / row.open
             else:
                 res["performance"] = 0
-            # logger.info(f"Strategy {strategy['id']} got results {res}")
             results.append(res)
     return results
 
 
 def no_trade_results(strategy, trade_percent):
     res = dict(
-                strategy=strategy,
-                trend="na",
-                open="na",
-                close="na",
-                high="na",
-                low="na",
-                result=NO_TRADES,
-                profit=dict(max=NO_TRADES, timestamp="na", n_steps=0),
-                loss=dict(max=NO_TRADES, timestamp="na", n_steps=0),
-                open_timestamp="na",
-                performance=0,
-                trade_percent=trade_percent
-            )
+        strategy=strategy,
+        target=None,
+        hit_at=None,
+        stopped_at=None,
+        stop_loss=None,
+        trend=None,
+        open=None,
+        close=None,
+        high=None,
+        low=None,
+        result=NO_TRADES,
+        open_timestamp=None,
+        performance=0,
+        trade_percent=trade_percent,
+    )
     return res
 
 
-def get_trade_result(window: pd.Series, target: float, stop_loss: float) -> str:
+def get_trade_result(window: pd.Series, target: float, stop_loss: float) -> tuple:
+    target_hit_at, stopped_out_at = None, None
     try:
         target_hit_at = window.loc[window[window["close"] >= target].index.min()]
     except KeyError:
@@ -149,7 +180,7 @@ def get_trade_result(window: pd.Series, target: float, stop_loss: float) -> str:
         result = STOPPED
     else:
         result = NA
-    return result
+    return (result, target_hit_at, stopped_out_at)
 
 
 def get_window_performance(window: pd.Series, row: pd.Series) -> Dict:

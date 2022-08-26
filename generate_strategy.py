@@ -8,9 +8,9 @@ from string import ascii_lowercase
 from typing import Sequence
 import uuid
 from generate_blank_signals import INDICATORS
+from helpers import base_arg_parser
 
-from helpers import (
-    base_arg_parser,
+from env import (
     MIN_INDICATORS,
     MAX_SAME_CLASS_INDICATORS,
     MAX_STRATEGY_INDICATORS,
@@ -18,6 +18,7 @@ from helpers import (
     POPULATION_SIZE,
 )
 
+CONJUNCTIONS = CONJUNCTIONS[:2]  # exclude negations.
 
 with open("signals/absolute_signals.json", "r") as fi:
     LOADED_INDICATORS = json.load(fi)
