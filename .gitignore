@@ -3,3 +3,4 @@
 __pycache__/
 .pytest_cache/
 .vscode/
+iac/.terraform/providers/registry.terraform.io/hashicorp/aws/*

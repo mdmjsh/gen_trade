@@ -21,17 +21,6 @@ def plot_multiple(dfs):
     return fig
 
 
-fig = px.violin(top_15, x='a', y="fitness", box=True, points="all",
-          )
-gens = []
-for ix, t in enumerate(top_15):
-    gens.append(f"gen_{ix +1}")
-    fig.add_trace(go.Violin(y=t.fitness,
-                            x=t.a))
-
-
-pd.concat(top_15,axis=1).plot()
-
 def plot_price_increase(df):
     plt.plot("converted_open_ts", "close", data=df)
 
