@@ -1,6 +1,4 @@
-from ast import Call
 from copy import deepcopy
-from decimal import DivisionByZero
 import json
 
 import os
@@ -9,7 +7,6 @@ from typing import Callable, Dict, Iterable, List, Tuple
 
 from generate_strategy import LOADED_INDICATORS, make_strategy_from_indicators
 import arrow
-import sys
 import pandas as pd
 from df_adapter import dfa
 from generate_strategy import main as generate_main
@@ -45,12 +42,23 @@ from fitness_functions import (
 # 2022-08-21T18:33:01.133223+00:00_results.csv
 # Finished in 63173 seconds
 # 500 generations
-
+# population size 10
 
 run 4: after removing negation conjunctions
+running with dask locally
 original FF
 2022-08-23T13:36:00.298698+00:00_results.csv
 INFO:Finished in 34164 seconds
+
+run 4: after removing negation conjunctions
+no dask locally
+profit FF
+2022-08-27 02:16:16,847INFO:Finished in 8977 seconds
+
+2022-08-27 10:22:12,408INFO:Population created
+2022-08-27 10:22:25,388INFO:Finished in 1465 seconds
+BUCKET=b poetry run python genetic.py  --write_local=True --generations=10 --population_size=100 --fitness_function=p
+
 """
 
 
@@ -75,6 +83,8 @@ def main(
     max_generations: int = MAX_GENERATIONS,
     ranked_results: List = None,
     serial_debug: bool = False,
+    population_size: int = POPULATION_SIZE,
+    save_options: Dict = None
 ):
     """Main Genetic Algorithm. Logic:
 
@@ -96,27 +106,40 @@ def main(
     if generation <= max_generations:
         logger.info(f"Running generation {generation}")
 
-        # Serial invocation - for debugging
-        if serial_debug:
-            results = [
-                run_strategy(trading_data, ranked_results, strat)
-                for strat in strategies
-            ]
-            fitness = [fitness_function(serial_debug, x) for x in results]
-
-        else:
-
+        # Special case as this one requires passing in all results together
+        # (i.e. not iteratively per strategy)
+        if fitness_function.__name__ == "fitness_simple_profit":
             results = process_future_caller(
                 run_strategy, strategies, trading_data, ranked_results
             )
-            fitness = process_future_caller(fitness_function, results, serial_debug)
+            fitness = fitness_function(results, serial_debug)
+        else:
+            # Serial invocation - for debugging
+            if serial_debug:
+                results = [
+                    run_strategy(trading_data, ranked_results, strat)
+                    for strat in strategies
+                ]
+                fitness = [fitness_function(x) for x in results]
+            else:
+                results = process_future_caller(
+                    run_strategy, strategies, trading_data, ranked_results
+                )
+                fitness = process_future_caller(fitness_function, results)
 
         ranking, weights = apply_ranking(fitness)
         ranked_results.append(ranking)
 
+        if save_options.get('incremental_saves'):
+            logger.info(f"save incremental data for generation {generation}")
+            dt = arrow.utcnow()
+            fname = (f"{dt.isoformat()}_{fitness_function.__name__}"
+                     f"_{population_size}_{generation}.csv")
+            save_data(fname, ranking, **save_options)
+
         logger.info(f"RECURSSING!")
 
-        population = generate_population(ranking, weights)
+        population = generate_population(ranking, weights, population_size)
         main(
             trading_data,
             population,
@@ -125,6 +148,8 @@ def main(
             max_generations=max_generations,
             ranked_results=ranked_results,
             serial_debug=serial_debug,
+            population_size=population_size,
+            save_options=save_options,
         )
     return ranked_results
 
@@ -138,7 +163,9 @@ def apply_ranking(results: Tuple) -> Tuple[pd.DataFrame, Dict]:
     return df, weights
 
 
-def generate_population(ranked: dfa.DataFrame, weights: Dict) -> List[Dict]:
+def generate_population(
+    ranked: dfa.DataFrame, weights: Dict, population_size: int = POPULATION_SIZE
+) -> List[Dict]:
     """Applies ranking, cross over and mutation to create a new population"""
     # Elitism - keep the two best solutions from the previous population
 
@@ -146,11 +173,11 @@ def generate_population(ranked: dfa.DataFrame, weights: Dict) -> List[Dict]:
     # elitism
     population = [ranked.iloc[0].strategy, ranked.iloc[1].strategy]
     logger = get_logger(__name__)
-    logger.info(f"generating new population of length {POPULATION_SIZE}")
+    logger.info(f"generating new population of length {population_size}")
 
     _weights = deepcopy(weights)
 
-    while len(population) < POPULATION_SIZE:
+    while len(population) < population_size:
         x, y = select_parents(ranked, _weights)
         offspring = cross_over_ppx(x.strategy, y.strategy)
         population.append(mutate(offspring))
@@ -192,8 +219,7 @@ def cross_over_ppx(strat_x: Dict, strat_y: Dict) -> Dict:
         finally:
             if p_ind not in offspring:
                 offspring.append(p_ind)
-    ble = make_strategy_from_indicators(offspring)
-    return ble
+    return make_strategy_from_indicators(offspring)
 
 
 def cross_over_pmx(strat_x: Dict, strat_y: Dict) -> Tuple[Dict, Dict]:
@@ -290,11 +316,11 @@ def load_strategies(
     path: str = None,
     max_indicators: int = None,
     max_same_class: int = None,
-    population_size: int = None,
+    population_size: int = POPULATION_SIZE,
 ) -> List[Dict]:
     if path:
-        with open(path, "r"):
-            return json.load(path)
+        with open(path, "r") as fi:
+            return json.loads(fi.read())
 
     return generate_main(
         max_indicators=max_indicators,
@@ -308,6 +334,23 @@ FITNESS_MAP = dict(
     h=fitness_function_ha_and_moon,
     p=fitness_simple_profit,
 )
+
+
+def save_data(
+    fname,
+    df,
+    incremental_saves=False,
+    write_local=False,
+    write_s3=False,
+    output_path=None,
+    bucket=None,
+) -> None:
+    if output_path:
+        fname = os.path.join(output_path, fname)
+    if write_local:
+        df.to_csv(fname)
+    if write_s3:
+        write_df_to_s3(df, bucket, fname)
 
 
 if __name__ == "__main__":
@@ -331,46 +374,64 @@ if __name__ == "__main__":
         type=str,
         help="fitness function use (h=ha_and_moon, o=original, p=profit)",
     )
+    parser.add_argument(
+        "--output_path",
+        type=str,
+        help="path to save outputs",
+    )
+    parser.add_argument(
+        "--incremental_saves",
+        type=bool,
+        help="when true saves the output for every 10 strategies tested",
+    )
 
     parser.set_defaults(
-        write_s3=False,
-        write_local=True,
-        generations=os.getenv("GENERATIONS", MAX_GENERATIONS),
+        write_s3=bool(os.getenv("WRITE_S3", False)),
+        write_local=bool(os.getenv("WRITE_LOCAL", True)),
+        generations=int(os.getenv("GENERATIONS", MAX_GENERATIONS)),
         s3_bucket=os.getenv("BUCKET"),
-        serial_debug=False,
-        strategies_path=None,
-        fitness_function="o",
+        serial_debug=os.getenv("SERIAL_DEBUG", False),
+        strategies_path=os.getenv("STRATEGY_PATH"),
+        fitness_function=os.getenv("FITNESS_FUNCTION", "p"),
+        incremental_saves=bool(os.getenv("INCREMENTAL_SAVES", False))
     )
     args = parser.parse_args()
+    gens = args.generations
+    pop_size = args.population_size
 
     strategies = load_strategies(
         args.strategies_path,
         args.max_indicators,
         args.max_same_class,
-        args.population_size,
+        pop_size,
     )
     start = arrow.utcnow()
+
+    save_options = dict(
+        incremental_saves=args.incremental_saves,
+        write_local=args.write_local,
+        write_s3=args.write_s3,
+        output_path=args.output_path,
+        bucket=args.s3_bucket,
+    )
+
+    ff = FITNESS_MAP[args.fitness_function]
     results = main(
         load_trading_data(),
         strategies,
-        FITNESS_MAP[args.fitness_function],
-        max_generations=args.generations,
+        ff,
+        max_generations=gens,
         serial_debug=args.serial_debug,
+        population_size=pop_size,
+        save_options=save_options,
     )
     stop = arrow.utcnow()
 
     df = dfa.concat(results)
 
-    fname = (
-        f"{start.isoformat()}_results_{args.fitness_function}_{args.generations}.csv"
-    )
-
+    fname = f"{start.isoformat()}_results_{ff.__name__}_{pop_size}_{gens}.csv"
+    save_data(fname, df, **save_options)
     df = make_pandas_df(df)
-
-    if args.write_local:
-        df.to_csv(fname)
-    if args.write_s3:
-        write_df_to_s3(df, args.s3_bucket, fname)
 
     logger = get_logger(__name__)
     logger.info(f"Finished in {(stop - start).seconds} seconds")

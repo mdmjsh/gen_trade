@@ -1,6 +1,6 @@
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 from functools import partial
-from itertools import repeat
+import multiprocessing
 from typing import Iterable
 
 
@@ -23,6 +23,7 @@ process_future_caller([[], [], []], 1, 2)
 
 """
 
+CPU_COUNT = multiprocessing.cpu_count()
 
 def process_future_caller(func: callable, iterable: Iterable, *constants):
     return future_caller(func, iterable, ProcessPoolExecutor, *constants)
@@ -35,7 +36,7 @@ def threaded_future_caller(func: callable, iterable: Iterable, *constants):
 def future_caller(func: callable, iterable, Executor=ThreadPoolExecutor, *constants):
     """Wrapper to map the callable to the iteratable using the `constants` as partial args for each call."""
 
-    with Executor() as executor:
+    with Executor(max_workers=CPU_COUNT) as executor:
         fun = partial(func, *constants)
         results = executor.map(fun, iterable)
 

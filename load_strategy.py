@@ -84,7 +84,6 @@ def load_from_object_parenthesised(strategy: Dict) -> str:
         result = ""
         open_paren_count = 0
         for ix, strat in enumerate(parsed):
-
             _strat = copy(strat)
             try:
                 conj = conjunctions[ix]

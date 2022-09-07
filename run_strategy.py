@@ -10,16 +10,6 @@ from env import TARGET, STOP_LOSS, HIT, STOPPED, NA, NO_TRADES, CUTOFF_PERCENT
 # example multiple disjunct strategy
 # volatility_dcm < volatility_dcm_previous and (trend_psar_up > trend_sma_slow or (volatility_kchi < volatility_kchi_previous or trend_ema_slow < trend_sma_slow))
 
-# risk:reward ratio 2:1
-TARGET = 0.015
-STOP_LOSS = TARGET / 2
-
-HIT = "TARGET_HIT"
-STOPPED = "STOPPED_OUT"
-NA = "NO_CLOSE_IN_WINDOW"
-NO_TRADES = "NO_ENTRIES_FOR_STRATEGY"
-
-
 def win(x):
     return x * (1 + TARGET)
 

@@ -50,7 +50,7 @@ resource "aws_instance" "ga_instance" {
                 sudo chkconfig docker on
                 aws ecr get-login-password --region ${var.region} | docker login --username AWS --password-stdin "${var.account}.dkr.ecr.${var.region}.amazonaws.com"
                 docker pull "${var.account}.dkr.ecr.${var.region}.amazonaws.com/ga-repo:latest"
-                docker run -e PARALLEL=1 BUCKET=${ga_bucket.bucket} --rm "${var.account}.dkr.ecr.${var.region}.amazonaws.com/ga-repo:latest"
+                docker run -e PARALLEL=1 --rm "${var.account}.dkr.ecr.${var.region}.amazonaws.com/ga-repo:latest"
               EOF
 }
 

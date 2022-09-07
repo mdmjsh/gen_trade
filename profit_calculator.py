@@ -1,12 +1,10 @@
 import logging
 import ast
-from types import NoneType
-from typing import Dict, List, Tuple, Type
+from typing import Dict, List, Tuple
 from helpers import get_latest_path
 import pandas as pd
 from run_strategy import win, loss
-import argparse
-from env import HIT, STOPPED, NA
+from env import HIT, STOP_LOSS, STOPPED, NA, TARGET, BUY_AMOUNT
 
 AMOUNT = 1000
 
@@ -31,7 +29,7 @@ def main(path):
     return res
 
 
-def group_consecutive_results(
+def calculate_cumulative_profit(
     path: str | None = None, df: pd.DataFrame | None = None
 ) -> Dict:
     """groups consecutive results to calculate the cumulative profit and loss.
@@ -76,7 +74,7 @@ def group_consecutive_results(
     return output
 
 
-def simple_profit_calculator(
+def calculate_simple_profit(
     path: str | None = None, df: pd.DataFrame | None = None
 ) -> Dict:
     try:
@@ -86,28 +84,32 @@ def simple_profit_calculator(
         if path:
             df = pd.read_csv(path)
         else:
-            df = pd.DataFrame(columns=['id', 'results'])
+            df = pd.DataFrame(columns=["id", "results"])
     output = dict()
 
     for ix in range(len(df)):
-        wins = 0
-        losses = 0
-        holds = 0
+        total = 10000
+        traded = []
         row = df.iloc[ix]
         try:
             results = list(ast.literal_eval(row.result).values())
         except ValueError:
             results = list(row.result.values())
+        # wins = results.count(HIT)
+        # losses = results.count(STOPPED)
+        # output[row.id] = (wins * AMOUNT * TARGET) - (losses * AMOUNT * STOP_LOSS)
         for res in results:
+            traded.append(res in (HIT, STOPPED))
             if res == HIT:
-                wins += 1
+                total += BUY_AMOUNT * TARGET
             elif res == STOPPED:
-                losses += 1
-            elif res == NA:
-                holds += 1
-        output[row.id] = sum(win(AMOUNT) for x in range(wins)) - sum(
-            loss(AMOUNT) for x in range(losses)
-        )
+                total -= BUY_AMOUNT * STOP_LOSS
+
+        # take away the starting ammount
+        total -= 10000
+
+        output[row.id] = total
+
     return output
 
 
@@ -157,6 +159,4 @@ if __name__ == "__main__":
     #     datefmt="%H:%M:%S",
     #     level=logging.INFO,
     # )
-    results = simple_profit_calculator(path)
-    import ipdb
-    ipdb.set_trace()
+    results = calculate_simple_profit(path)

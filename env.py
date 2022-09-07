@@ -17,4 +17,5 @@ MAX_STRATEGY_INDICATORS = int(os.getenv('MAX_STRATEGY_INDICATORS', 4))
 POPULATION_SIZE = int(os.getenv('POPULATION_SIZE', 10))
 CONJUNCTIONS = ["and", "or", "and not", "or not"]
 CUTOFF_PERCENT = 1 / 3
+BUY_AMOUNT = 1000
 
