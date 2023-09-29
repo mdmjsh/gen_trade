@@ -41,7 +41,7 @@ with greater parallelism. Additionally, the underlying Python codebase works as 
 dalone Python package and embeds many of the interesting implementation challenges such
 as multiprocessing, modularity and extensibility.
 
-## Usage:
+# Usage:
 
 0. Setup the environment.
 `poetry install`
