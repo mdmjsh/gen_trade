@@ -60,6 +60,7 @@ To run on specific strategies (i.e. rerun on previously generated strategies):
 Command line interface menu for
 genetic.py
 
+```
 poetry run python genetic.py --help
 usage: Main genetic algorithm. [-h] [--population_size POPULATION_SIZE]
 [--max_indicators MAX_INDICATORS]
@@ -98,6 +99,7 @@ fitness function use (h=ha_and_moon, o=original, p=profit)
 path to save outputs
 --incremental_saves INCREMENTAL_SAVES
 when true, saves the output for every 10 strategies tested
+```
 
 ## Docker
 
