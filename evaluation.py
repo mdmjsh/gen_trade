@@ -118,7 +118,4 @@ if __name__ == "__main__":
     paths = sorted(os.listdir("outputs/ec2_output/"))
     dfs = [pd.read_csv(f"outputs/ec2_output/{p}") for p in paths]
     conc = pd.concat(dfs)
-    import ipdb
-
-    ipdb.set_trace()
     price_data = load_trading_data()
